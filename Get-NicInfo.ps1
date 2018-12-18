@@ -1,35 +1,33 @@
 [cmdletbinding()]
 param()
 begin {
-    $AdapterInfo = Get-NetAdapter
+    $Adapters = Get-NetAdapter
     $InterfaceInfo = Get-NetIPInterface
     $IPAddressConfig = Get-NetIPConfiguration -Detailed
     $DNSInfo = Get-DnsClientServerAddress
 }
 process {
-    $Interfaces = $InterfaceInfo | Sort-Object ifIndex -Unique
-    foreach ($Interface in $Interfaces) {
-        $ifIndex = $Interface.ifIndex
-        $IF = $InterfaceInfo | Where-Object {$_.ifIndex -eq $ifIndex}
-        $Adapter = $AdapterInfo  | Where-Object {$_.ifIndex -eq $ifIndex }
+    foreach ($Adapter in $Adapters) {
+        $ifIndex = $Adapter.ifIndex
+        $Interface = $InterfaceInfo | Where-Object {$_.ifIndex -eq $ifIndex}
         $IPConfig = $IPAddressConfig | Where-Object {$_.InterfaceIndex -eq $ifIndex }
         $DNS = $DNSInfo | Where-Object {$_.InterfaceIndex -eq $ifIndex}
 
         [PSCustomObject]@{
-            Alias              = $interface.ifAlias
+            Alias              = $Adapter.Name
             Index              = $ifIndex
             PhysicalAdapter    = if ($Adapter.HardwareInterface) {$adapter.HardwareInterface}else {$false}
             Status             = $Adapter.Status
-            ConnectionState    = $IF.ConnectionState
+            ConnectionState    = $Interface.ConnectionState
             Linkspeed          = $Adapter.LinkSpeed
             MacAddress         = $Adapter.MacAddress
-            AddressFamily      = $IF.AddressFamily
+            AddressFamily      = $Interface.AddressFamily
             InternetAccess     = $IPconfig.NetProfile.IPv4Connectivity
             NetworkCategory    = $IPConfig.NetProfile.NetworkCategory
-            DHCP               = $IF.DHCP
-            IPv4Address        = $IPConfig.IPv4Address
+            DHCP               = $Interface.DHCP
+            IPv4Address        = $IPConfig.IPv4Address.IPAddress
             IPv4DefaultGateway = $IPConfig.IPv4DefaultGateway.NextHop
-            IPv6Address        = $IPConfig.IPv6Address
+            IPv6Address        = $IPConfig.IPv6Address.IPAddress
             IPv6DefaultGateway = $IPConfig.IPv6DefaultGateway.NextHop
             DNSServersIPv4     = ($DNS | Where-Object {$_.AddressFamily -eq '2'}).ServerAddresses
             DNSServersIPv6     = ($DNS | Where-Object {$_.AddressFamily -eq '23'}).ServerAddresses
