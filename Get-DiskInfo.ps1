@@ -8,7 +8,7 @@ Get-DiskInfo {
     }
     process {
         foreach ($Volume in $Volumes) {
-            $Partition = $Partitions | Where-Object {$_.AccessPaths[1] -eq $Volume.Path}
+            $Partition = $Partitions | Where-Object {$_.AccessPaths -eq $Volume.Path -AND $_.AccessPaths -match '\\\\'}
             $Disk = $Disks | Where-Object {$_.Path -eq $Partition.DiskPath}
             [PSCustomObject]@{
                 DriveLetter       = $Volume.DriveLetter
