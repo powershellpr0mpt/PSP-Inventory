@@ -1,4 +1,4 @@
-Get-DiskInfo {
+function Get-DiskInfo {
     [cmdletbinding()]
     param()
     begin {
