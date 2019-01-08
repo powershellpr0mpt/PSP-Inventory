@@ -26,7 +26,7 @@ function Get-NicInfo
                     $Config = Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -ComputerName $Computer
 
                     [PSCustomObject]@{
-                        Computer          = $Computer
+                        ComputerName      = $Computer
                         Alias             = $Adapter.NetConnectionID
                         Index             = $Adapter.DeviceId
                         PhysicalAdapter   = $Adapter.PhysicalAdapter
@@ -77,7 +77,7 @@ function Get-NicInfo
                     $Config = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'"
 
                     [PSCustomObject]@{
-                        Computer          = $Computer
+                        ComputerName      = $Computer
                         Alias             = $Adapter.NetConnectionID
                         Index             = $Adapter.DeviceId
                         PhysicalAdapter   = $Adapter.PhysicalAdapter
