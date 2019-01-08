@@ -15,7 +15,7 @@ function Get-NicInfo
                 $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -ComputerName $Computer -Filter "PhysicalAdapter=True" -ErrorAction Stop
                 if ($Drivers)
                 {
-                    $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -ComputerName $Computer
+                    $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -ComputerName $Computer -ErrorAction Stop
                 }
                 foreach ($Adapter in $Adapters)
                 {
