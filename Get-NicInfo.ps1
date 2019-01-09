@@ -91,7 +91,7 @@ function Get-NicInfo
                             DNSServers        = $Config.DNSServerSearchOrder
                             Gateway           = $Config.DefaultIPGateway
                             Subnet            = $Config.IPSubnet
-                            LinkspeedMB       = ($Adapter.Speed / 1000000)
+                            LinkspeedMB       = $LinkSpeed
                             DriverInf         = if ($Drivers) {$DriverInfo.InfName}else {''}
                             DriverFileName    = if ($Drivers) {$SignedDrivers.Where{$_.Antecedent.DeviceId -eq $DriverInfo.DeviceId}[0].Dependent.Name}else {''}
                             DriverVersion     = if ($Drivers) {$DriverInfo.DriverVersion}else {''}
