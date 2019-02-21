@@ -6,6 +6,9 @@ function Get-NicInfo {
         [string[]]$ComputerName = $env:COMPUTERNAME,
         [switch]$Drivers
     )
+    begin {
+        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+    }
     process
     {
         foreach ($Computer in $ComputerName)
@@ -46,6 +49,7 @@ function Get-NicInfo {
                         DriverDescription = if ($Drivers) {$DriverInfo.Description}else {''}
                         DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                         NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
+                        InventoryDate = $Date
                     }
                     $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
                     $NIC
@@ -101,6 +105,7 @@ function Get-NicInfo {
                             DriverDescription = if ($Drivers) {$DriverInfo.Description}else {''}
                             DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                             NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
+                            InventoryDate = $Date
                         }
                         $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
                         $NIC    

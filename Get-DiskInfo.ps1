@@ -6,6 +6,9 @@ function Get-DiskInfo
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
+    begin {
+        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+    }
     process
     {
         foreach ($Computer in $ComputerName)
@@ -37,6 +40,7 @@ function Get-DiskInfo
                         PartitionNumber    = $Partition.Index
                         IsPrimaryPartition = $Partition.PrimaryPartition
                         IsBootPartition    = $Partition.BootPartition
+                        InventoryDate      = $Date
                     }
                     $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
                     $Dsk
@@ -75,6 +79,7 @@ function Get-DiskInfo
                             PartitionNumber    = $Partition.Index
                             IsPrimaryPartition = $Partition.PrimaryPartition
                             IsBootPartition    = $Partition.BootPartition
+                            InventoryDate = $Date
                         }
                         $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
                         $Dsk    

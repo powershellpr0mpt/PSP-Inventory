@@ -5,19 +5,23 @@ Function Get-LocalUser {
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
+    begin {
+        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+    }
     process {
         foreach ($Computer in $Computername) {
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | ? {$_.SchemaClassName -eq 'User'}
-            foreach ($User in $UserInfo){
+            foreach ($User in $UserInfo) {
                 $Usr = [pscustomobject]@{
-                    ComputerName = $Computer
-                    UserName = $User.Name[0]
-                    Description = $User.Description[0]
-                    LastLogin = if ($User.LastLogin[0] -is [datetime]){$User.LastLogin[0]}else{$null}
-                    SID = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
-                    UserFlags = (Convert-UserFlag -UserFlag $User.UserFlags[0])
+                    ComputerName  = $Computer
+                    UserName      = $User.Name[0]
+                    Description   = $User.Description[0]
+                    LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
+                    SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
+                    UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
+                    InventoryDate = $Date
                 }
-                $Usr.PSTypeNames.Insert(0,'PSP.Inventory.LocalUser')
+                $Usr.PSTypeNames.Insert(0, 'PSP.Inventory.LocalUser')
                 $Usr
             }
         }

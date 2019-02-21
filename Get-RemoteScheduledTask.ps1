@@ -1,26 +1,27 @@
 Function Get-RemoteScheduledTask {   
     [cmdletbinding()]
     Param (    
-        [parameter(ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)]
+        [parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)]
         [string[]]$Computername = $env:COMPUTERNAME
     )
     Begin {
         $ST = new-object -com("Schedule.Service")
+        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     Process {
         ForEach ($Computer in $Computername) {
             Try {
                 $st.Connect($Computer)
-                $root=  $st.GetFolder("\")
+                $root = $st.GetFolder("\")
                 @($root.GetTasks(0)) | ForEach {
                     $xml = ([xml]$_.xml).task
                     [pscustomobject] @{
-                        ComputerName = $Computer
-                        Task = $_.Name
-                        Author = $xml.RegistrationInfo.Author
-                        RunAs = $xml.Principals.Principal.UserId                        
-                        Enabled = $_.Enabled
-                        State = Switch ($_.State) {
+                        ComputerName   = $Computer
+                        Task           = $_.Name
+                        Author         = $xml.RegistrationInfo.Author
+                        RunAs          = $xml.Principals.Principal.UserId                        
+                        Enabled        = $_.Enabled
+                        State          = Switch ($_.State) {
                             0 {'Unknown'}
                             1 {'Disabled'}
                             2 {'Queued'}
@@ -74,13 +75,15 @@ Function Get-RemoteScheduledTask {
                             0x80041328 {"The task settings do not allow the task to start on demand"}
                             Default {[string]$_}
                         }
-                        Command = $xml.Actions.Exec.Command
-                        Arguments = $xml.Actions.Exec.Arguments
-                        StartDirectory =$xml.Actions.Exec.WorkingDirectory
-                        Hidden = $xml.Settings.Hidden
+                        Command        = $xml.Actions.Exec.Command
+                        Arguments      = $xml.Actions.Exec.Arguments
+                        StartDirectory = $xml.Actions.Exec.WorkingDirectory
+                        Hidden         = $xml.Settings.Hidden
+                        InventoryDate  = $Date
                     }
                 }
-            } Catch {
+            }
+            Catch {
                 Write-Warning ("{0}: {1}" -f $Computer, $_.Exception.Message)
             }
         }

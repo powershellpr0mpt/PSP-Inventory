@@ -8,7 +8,7 @@ $LastReboot = Try {
 Catch {
 }
 $OperatingSystem = [pscustomobject]@{
-    Computername = $Computername
+    ComputerName = $Computername
     Caption = $OS.caption
     Version = $OS.version
     ServicePack = ("{0}.{1}" -f $OS.ServicePackMajorVersion, $OS.ServicePackMinorVersion)

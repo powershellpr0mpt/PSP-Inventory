@@ -2,108 +2,115 @@ Function Get-Software {
     [OutputType('PSP.Inventory.Software')]
     [Cmdletbinding()] 
     Param( 
-        [Parameter(ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)] 
-        [String[]]$ComputerName=$env:COMPUTERNAME
+        [Parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)] 
+        [String[]]$ComputerName = $env:COMPUTERNAME
     )         
     Begin {
+        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     Process {     
-        ForEach ($Computer in $Computername){ 
-            If (Test-Connection -ComputerName $Computer -Count 1 -Quiet) {
-                $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall","SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
-                ForEach($Path in $Paths) { 
+        foreach ($Computer in $Computername) { 
+            if (Test-Connection -ComputerName $Computer -Count 1 -Quiet) {
+                $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
+                foreach ($Path in $Paths) { 
                     Write-Verbose "Checking Path: $Path"
                     # Create an instance of the Registry Object and open the HKLM base key 
-                    Try { 
-                        $reg=[microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine',$Computer,'Registry64') 
-                    } Catch { 
+                    try { 
+                        $reg = [microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64') 
+                    }
+                    catch { 
                         Write-Error $_ 
                         Continue 
                     } 
                     # Drill down into the Uninstall key using the OpenSubKey Method 
-                    Try {
-                        $regkey=$reg.OpenSubKey($Path)  
+                    try {
+                        $regkey = $reg.OpenSubKey($Path)  
                         # Retrieve an array of string that contain all the subkey names 
-                        $subkeys=$regkey.GetSubKeyNames()      
+                        $subkeys = $regkey.GetSubKeyNames()      
                         # Open each Subkey and use GetValue Method to return the required values for each 
-                        ForEach ($key in $subkeys){   
+                        foreach ($key in $subkeys) {   
                             Write-Verbose "Key: $Key"
-                            $thisKey=$Path+"\\"+$key 
-                            Try {  
-                                $thisSubKey=$reg.OpenSubKey($thisKey)   
+                            $thisKey = $Path + "\\" + $key 
+                            try {  
+                                $thisSubKey = $reg.OpenSubKey($thisKey)   
                                 # Prevent Objects with empty DisplayName 
                                 $DisplayName = $thisSubKey.getValue("DisplayName")
-                                If ($DisplayName -AND $DisplayName -notmatch '^Update for|rollup|^Security Update|^Service Pack|^HotFix') {
+                                if ($DisplayName -AND $DisplayName -notmatch '^Update for|rollup|^Security Update|^Service Pack|^HotFix') {
                                     $Date = $thisSubKey.GetValue('InstallDate')
-                                    If ($Date) {
-                                        Try {
+                                    if ($Date) {
+                                        try {
                                             $Date = [datetime]::ParseExact($Date, 'yyyyMMdd', $Null)
-                                        } Catch{
-				                            Write-Warning "$($Computer): $_ <$($Date)>"
+                                        }
+                                        catch {
+                                            Write-Warning "$($Computer): $_ <$($Date)>"
                                             $Date = $Null
                                         }
                                     } 
                                     # Create New Object with empty Properties 
-                                    $Publisher = Try {
+                                    $Publisher = try {
                                         $thisSubKey.GetValue('Publisher').Trim()
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('Publisher')
                                     }
-                                    $Version = Try {
+                                    $Version = try {
                                         #Some weirdness with trailing [char]0 on some strings
-                                        $thisSubKey.GetValue('DisplayVersion').TrimEnd(([char[]](32,0)))
+                                        $thisSubKey.GetValue('DisplayVersion').TrimEnd(([char[]](32, 0)))
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('DisplayVersion')
                                     }
-                                    $UninstallString = Try {
+                                    $UninstallString = try {
                                         $thisSubKey.GetValue('UninstallString').Trim()
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('UninstallString')
                                     }
-                                    $InstallLocation = Try {
+                                    $InstallLocation = try {
                                         $thisSubKey.GetValue('InstallLocation').Trim()
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('InstallLocation')
                                     }
-                                    $InstallSource = Try {
+                                    $InstallSource = try {
                                         $thisSubKey.GetValue('InstallSource').Trim()
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('InstallSource')
                                     }
-                                    $HelpLink = Try {
+                                    $HelpLink = try {
                                         $thisSubKey.GetValue('HelpLink').Trim()
                                     } 
-                                    Catch {
+                                    catch {
                                         $thisSubKey.GetValue('HelpLink')
                                     }
                                     $Software = [pscustomobject]@{
-                                        ComputerName = $Computer
-                                        DisplayName = $DisplayName
-                                        Version = $Version
-                                        InstallDate = $Date
-                                        Publisher = $Publisher
+                                        ComputerName    = $Computer
+                                        DisplayName     = $DisplayName
+                                        Version         = $Version
+                                        InstallDate     = $Date
+                                        Publisher       = $Publisher
                                         UninstallString = $UninstallString
                                         InstallLocation = $InstallLocation
-                                        InstallSource = $InstallSource
-                                        HelpLink = $thisSubKey.GetValue('HelpLink')
-                                        EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2))
+                                        InstallSource   = $InstallSource
+                                        HelpLink        = $thisSubKey.GetValue('HelpLink')
+                                        EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize') * 1024) / 1MB, 2))
+                                        InventoryDate   = $Date
                                     }
-                                    $Software.PSTypeNames.Insert(0,'PSP.Inventory.Software')
+                                    $Software.PSTypeNames.Insert(0, 'PSP.Inventory.Software')
                                     $Software
                                 }
-                            } Catch {
+                            }
+                            catch {
                                 Write-Warning "$Key : $_"
                             }   
                         }
-                    } Catch {}   
+                    }
+                    catch {}   
                     $reg.Close() 
                 }                  
-            } Else {
+            }
+            else {
                 Write-Error "$($Computer): unable to reach remote system!"
             }
         } 
