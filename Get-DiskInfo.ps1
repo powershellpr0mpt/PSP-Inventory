@@ -1,5 +1,6 @@
 function Get-DiskInfo
 {
+    [OutputType('PSP.Inventory.Disk')]
     [cmdletbinding()]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
@@ -17,7 +18,7 @@ function Get-DiskInfo
                     $Partition = Get-CimAssociatedInstance -InputObject $Volume -ResultClass Win32_DiskPartition
                     $Disk = Get-CimAssociatedInstance -InputObject $Partition -ResultClassName Win32_DiskDrive
 
-                    [PSCustomObject]@{
+                    $Dsk = [PSCustomObject]@{
                         ComputerName       = $Computer
                         DriveLetter        = $Volume.Caption
                         Label              = $Volume.VolumeName
@@ -37,6 +38,8 @@ function Get-DiskInfo
                         IsPrimaryPartition = $Partition.PrimaryPartition
                         IsBootPartition    = $Partition.BootPartition
                     }
+                    $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
+                    $Dsk
                 }
             }
             catch [Microsoft.Management.Infrastructure.CimException]
@@ -53,7 +56,7 @@ function Get-DiskInfo
                         $Partition = Get-CimAssociatedInstance -CimSession $CimSession -InputObject $Volume -ResultClass Win32_DiskPartition
                         $Disk = Get-CimAssociatedInstance -CimSession $CimSession -InputObject $Partition -ResultClassName Win32_DiskDrive
 
-                        [PSCustomObject]@{
+                        $Dsk = [PSCustomObject]@{
                             ComputerName       = $Computer
                             DriveLetter        = $Volume.Caption
                             Label              = $Volume.VolumeName
@@ -73,6 +76,8 @@ function Get-DiskInfo
                             IsPrimaryPartition = $Partition.PrimaryPartition
                             IsBootPartition    = $Partition.BootPartition
                         }
+                        $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
+                        $Dsk    
                     }
                 }
                 catch

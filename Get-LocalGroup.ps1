@@ -1,23 +1,31 @@
 Function Get-LocalGroup {
+    [OutputType('PSP.Inventory.LocalGroup')]
     [Cmdletbinding()] 
     Param( 
-        [Parameter()] 
-        [String[]]$Computername = $Computername
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [String[]]$ComputerName = $env:COMPUTERNAME
     )
-    Function ConvertTo-SID {
-        Param([byte[]]$BinarySID)
-        (New-Object System.Security.Principal.SecurityIdentifier($BinarySID,0)).Value
-    }
-    Function Get-LocalGroupMember {
-        Param ($Group)
-        $group.Invoke('members') | ForEach {
-            $_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)
+    begin {
+        $GroupType = @{
+            0x2 = 'Global Group'
+            0x4 = 'Local Group'
+            0x8 = 'Universal Group'
+            2147483648 = 'Security Enabled'
         }
     }
-    $adsi = [ADSI]"WinNT://$Computername"
-    $adsi.Children | where {$_.SchemaClassName -eq 'group'} | 
-    Select @{L='Computername';E={$Computername}},@{L='Name';E={$_.Name[0]}},
-    @{L='Members';E={((Get-LocalGroupMember -Group $_)) -join '; '}},
-    @{L='SID';E={(ConvertTo-SID -BinarySID $_.ObjectSID[0])}},
-    @{L='GroupType';E={$GroupType[[int]$_.GroupType[0]]}}
+    process {
+        foreach ($Computer in $Computername) {
+            $GroupInfo = ([ADSI]"WinNT://$Computer").Children | ? {$_.SchemaClassName -eq 'Group'}
+            foreach ($Group in $GroupInfo){
+                $Grp = [pscustomobject]@{
+                    ComputerName = $Computer
+                    GroupName = $Group.Name[0]
+                    Members = ((Get-LocalGroupMember -Group $Group) -join '; ')
+                    GroupType = $GroupType[[int]$Group.GroupType[0]]
+                    SID = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
+                }
+                $Grp.PSTypeNames.Insert(0,'PSP.Inventory.LocalGroup')
+            }
+        }
+    }
 }

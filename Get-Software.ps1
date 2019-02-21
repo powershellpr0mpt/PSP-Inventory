@@ -1,9 +1,9 @@
 Function Get-Software {
-    [OutputType('System.Software.Inventory')]
+    [OutputType('PSP.Inventory.Software')]
     [Cmdletbinding()] 
     Param( 
         [Parameter(ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)] 
-        [String[]]$Computername=$env:COMPUTERNAME
+        [String[]]$ComputerName=$env:COMPUTERNAME
     )         
     Begin {
     }
@@ -81,8 +81,8 @@ Function Get-Software {
                                     Catch {
                                         $thisSubKey.GetValue('HelpLink')
                                     }
-                                    $Object = [pscustomobject]@{
-                                        Computername = $Computer
+                                    $Software = [pscustomobject]@{
+                                        ComputerName = $Computer
                                         DisplayName = $DisplayName
                                         Version = $Version
                                         InstallDate = $Date
@@ -93,8 +93,8 @@ Function Get-Software {
                                         HelpLink = $thisSubKey.GetValue('HelpLink')
                                         EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize')*1024)/1MB,2))
                                     }
-                                    $Object.pstypenames.insert(0,'System.Software.Inventory')
-                                    Write-Output $Object
+                                    $Software.PSTypeNames.Insert(0,'PSP.Inventory.Software')
+                                    $Software
                                 }
                             } Catch {
                                 Write-Warning "$Key : $_"

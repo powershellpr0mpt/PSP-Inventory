@@ -1,5 +1,5 @@
-function Get-NicInfo
-{
+function Get-NicInfo {
+    [OutputType('PSP.Inventory.NIC')]
     [cmdletbinding()]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
@@ -25,7 +25,7 @@ function Get-NicInfo
                     }
                     $Config = Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -ComputerName $Computer
 
-                    [PSCustomObject]@{
+                    $NIC = [PSCustomObject]@{
                         ComputerName      = $Computer
                         Alias             = $Adapter.NetConnectionID
                         Index             = $Adapter.DeviceId
@@ -47,6 +47,8 @@ function Get-NicInfo
                         DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                         NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
                     }
+                    $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
+                    $NIC
                 }
             }
             catch [Microsoft.Management.Infrastructure.CimException]
@@ -78,7 +80,7 @@ function Get-NicInfo
                         }
                         $Config = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'"
 
-                        [PSCustomObject]@{
+                        $NIC = [PSCustomObject]@{
                             ComputerName      = $Computer
                             Alias             = $Adapter.NetConnectionID
                             Index             = $Adapter.DeviceId
@@ -100,6 +102,8 @@ function Get-NicInfo
                             DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                             NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
                         }
+                        $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
+                        $NIC    
                     }
                 }
                 catch

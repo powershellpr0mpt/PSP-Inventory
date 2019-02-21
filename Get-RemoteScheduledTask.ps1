@@ -1,4 +1,4 @@
-Function Get-ScheduledTask {   
+Function Get-RemoteScheduledTask {   
     [cmdletbinding()]
     Param (    
         [parameter(ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)]
@@ -15,7 +15,7 @@ Function Get-ScheduledTask {
                 @($root.GetTasks(0)) | ForEach {
                     $xml = ([xml]$_.xml).task
                     [pscustomobject] @{
-                        Computername = $Computer
+                        ComputerName = $Computer
                         Task = $_.Name
                         Author = $xml.RegistrationInfo.Author
                         RunAs = $xml.Principals.Principal.UserId                        

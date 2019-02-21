@@ -1,8 +1,9 @@
 Function Get-SecurityUpdate {
+    [OutputType('PSP.Inventory.SecurityUpdate')]
     [Cmdletbinding()] 
     Param( 
-        [Parameter()] 
-        [String[]]$Computername = $Computername
+        [Parameter(ValueFromPipeline=$True,ValueFromPipelineByPropertyName=$True)] 
+        [String[]]$ComputerName = $env:COMPUTERNAME
     )              
     ForEach ($Computer in $Computername){ 
         $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall","SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
@@ -45,13 +46,15 @@ Function Get-SecurityUpdate {
                             Default {$Description = 'Unknown'}
                         }
                         # create New Object with empty Properties 
-                        $Object = [pscustomobject] @{
+                        $Update = [pscustomobject] @{
+                            ComputerName = $Computer
                             Type = $Description
                             HotFixID = $HotFixID
                             InstalledOn = $Date
                             Description = $DisplayName
                         }
-                        $Object
+                        $Update.PSTypeNames.Insert(0,'PSP.Inventory.SecurityUpdate')
+                        $Update
                     } 
                 }   
                 $reg.Close() 
