@@ -2,7 +2,7 @@ Function Get-Software {
     [OutputType('PSP.Inventory.Software')]
     [Cmdletbinding()] 
     Param( 
-        [Parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)] 
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
         [String[]]$ComputerName = $env:COMPUTERNAME
     )         
     Begin {

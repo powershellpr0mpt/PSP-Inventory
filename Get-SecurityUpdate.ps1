@@ -2,14 +2,14 @@ Function Get-SecurityUpdate {
     [OutputType('PSP.Inventory.SecurityUpdate')]
     [Cmdletbinding()] 
     param( 
-        [Parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)] 
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
-        foreach ($Computer in $Computername) { 
+        foreach ($Computer in $ComputerName) { 
             $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
             foreach ($Path in $Paths) { 
                 #Create an instance of the Registry Object and open the HKLM base key 

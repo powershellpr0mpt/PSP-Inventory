@@ -1,7 +1,7 @@
 function Convert-NetworkStatus
 {
     [cmdletbinding()]
-    Param(
+    param(
         [int]$NetworkStatus
     )
     switch ($NetworkStatus)

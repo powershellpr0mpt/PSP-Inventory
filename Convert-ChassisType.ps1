@@ -1,5 +1,8 @@
 Function Convert-ChassisType {
-    Param ([int[]]$ChassisType)
+    [cmdletbinding()]
+    param (
+        [int[]]$ChassisType
+    )
     $List = New-Object System.Collections.ArrayList
     Switch ($ChassisType) {
         0x0001  {[void]$List.Add('Other')}

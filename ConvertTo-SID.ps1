@@ -1,4 +1,5 @@
     Function ConvertTo-SID {
+        [cmdletbinding()]
         param(
             [byte[]]$BinarySID
         )

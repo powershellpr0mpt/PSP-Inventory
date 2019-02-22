@@ -1,21 +1,22 @@
-Function Get-RemoteScheduledTask {   
+Function Get-RemoteScheduledTask {  
+    [OutputType('PSP.Inventory.ScheduledTask')] 
     [cmdletbinding()]
-    Param (    
-        [parameter(ValueFromPipeline = $True, ValueFromPipelineByPropertyName = $True)]
-        [string[]]$Computername = $env:COMPUTERNAME
+    param (    
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [string[]]$ComputerName = $env:COMPUTERNAME
     )
-    Begin {
+    begin {
         $ST = new-object -com("Schedule.Service")
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
-    Process {
-        ForEach ($Computer in $Computername) {
-            Try {
+    process {
+        foreach ($Computer in $ComputerName) {
+            try {
                 $st.Connect($Computer)
                 $root = $st.GetFolder("\")
-                @($root.GetTasks(0)) | ForEach {
+                @($root.GetTasks(0)) | ForEach-Object {
                     $xml = ([xml]$_.xml).task
-                    [pscustomobject] @{
+                    $SchdTsk = [pscustomobject] @{
                         ComputerName   = $Computer
                         Task           = $_.Name
                         Author         = $xml.RegistrationInfo.Author
@@ -81,9 +82,11 @@ Function Get-RemoteScheduledTask {
                         Hidden         = $xml.Settings.Hidden
                         InventoryDate  = $Date
                     }
+                    $SchdTsk.PSTypeNames.Insert(0,'PSP.Inventory.ScheduledTask')
+                    $SchdTsk
                 }
             }
-            Catch {
+            catch {
                 Write-Warning ("{0}: {1}" -f $Computer, $_.Exception.Message)
             }
         }
