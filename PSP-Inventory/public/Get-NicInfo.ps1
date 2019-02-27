@@ -1,4 +1,40 @@
 function Get-NicInfo {
+    <#
+    .SYNOPSIS
+    Get Network adapter information for local or remote machines 
+    
+    .DESCRIPTION
+    Get Network adapter information for local or remote machines.
+    Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available
+    
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+    
+    .PARAMETER Drivers
+    Switch parameter
+    If activated will try and obtain the driver information for the adapter.
+    Do note that this will substantially increase time required
+    
+    .EXAMPLE
+    Get-NicInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    
+    Description
+    -----------
+    Gets the "basic" NIC information for CONTOSO-SRV01 and CONTOSO-WEB01
+ 
+    .NOTES
+    Name: Get-NicInfo.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 20-12-2018
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+    
     [OutputType('PSP.Inventory.NIC')]
     [cmdletbinding()]
     param(

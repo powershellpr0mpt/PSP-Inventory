@@ -1,4 +1,35 @@
 Function Get-LocalGroup {
+    <#
+    .SYNOPSIS
+    Get all local groups for local or remote machines
+    
+    .DESCRIPTION
+    Get all local groups for local or remote machines.
+    Provides extra information such as members
+    
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+    
+    .EXAMPLE
+    Get-LocalGroup -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    
+    Description
+    -----------
+    Gets the local groups for both CONTOSO-SRV01 and CONTOSO-WEB01
+    
+    .NOTES
+    Name: Get-LocalGroup.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 20-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+    
     [OutputType('PSP.Inventory.LocalGroup')]
     [Cmdletbinding()] 
     Param( 

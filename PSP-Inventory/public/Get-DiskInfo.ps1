@@ -1,5 +1,36 @@
-function Get-DiskInfo
-{
+function Get-DiskInfo {
+    <#
+    .SYNOPSIS
+    Get Disk information for local or remote machines 
+    
+    .DESCRIPTION
+    Get Disk information for local or remote machines. 
+    Will query Disks, partitions and volumes to obtain as much information as possible.
+    Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available
+    
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+    
+    .EXAMPLE
+    Get-DiskInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    
+    Description
+    -----------
+    Gets the Disk information for CONTOSO-SRV01 and CONTOSO-WEB01
+    
+    .NOTES
+    Name: Get-DiskInfo.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 22-12-2018
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+    
     [OutputType('PSP.Inventory.Disk')]
     [cmdletbinding()]
     param(

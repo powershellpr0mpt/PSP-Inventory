@@ -1,4 +1,35 @@
 function Get-OSInfo {
+    <#
+    .SYNOPSIS
+    Get Operating System information for local or remote machines 
+    
+    .DESCRIPTION
+    Get Operating System information for local or remote machines. 
+    Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available
+    
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+    
+    .EXAMPLE
+    Get-OSInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    
+    Description
+    -----------
+    Gets the Operating System information for CONTOSO-SRV01 and CONTOSO-WEB01
+    
+    .NOTES
+    Name: Get-OSInfo.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 20-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+    
     [OutputType('PSP.Inventory.OperatingSystemInfo')]
     [Cmdletbinding()] 
     param( 

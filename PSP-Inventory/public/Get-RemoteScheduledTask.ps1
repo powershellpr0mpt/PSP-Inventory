@@ -1,4 +1,35 @@
-Function Get-RemoteScheduledTask {  
+Function Get-RemoteScheduledTask {
+    <#
+    .SYNOPSIS
+    Get Scheduled task information for local or remote machines 
+    
+    .DESCRIPTION
+    Get Scheduled task information for local or remote machines. 
+    Will get all scheduled tasks in the root folder
+    
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+    
+    .EXAMPLE
+    Get-RemoteScheduledTask -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    
+    Description
+    -----------
+    Gets the Scheduled Tasks for CONTOSO-SRV01 and CONTOSO-WEB01
+    
+    .NOTES
+    Name: Get-RemoteScheduledTask.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 23-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+    
     [OutputType('PSP.Inventory.ScheduledTask')] 
     [cmdletbinding()]
     param (    
@@ -6,15 +37,15 @@ Function Get-RemoteScheduledTask {
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $ST = new-object -com("Schedule.Service")
+        $ST = New-Object -ComObject Schedule.Service
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     process {
         foreach ($Computer in $ComputerName) {
             try {
-                $st.Connect($Computer)
-                $root = $st.GetFolder("\")
-                @($root.GetTasks(0)) | ForEach-Object {
+                $ST.Connect($Computer)
+                $Root = $ST.GetFolder("\")
+                @($Root.GetTasks(0)) | ForEach-Object {
                     $xml = ([xml]$_.xml).task
                     $SchdTsk = [pscustomobject] @{
                         ComputerName   = $Computer
