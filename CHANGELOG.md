@@ -6,5 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 ## [Unreleased]
+### Changed
+- Cleaning up folder structure and moving all parts to the correct location
+- Adding comment based help for all public functions
 
 

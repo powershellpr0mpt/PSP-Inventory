@@ -59,7 +59,7 @@ Function Get-RemoteCertificate {
                 $CertStore.Open('ReadOnly')
                 $Certificates = $CertStore.Certificates  
                 foreach ($Certificate in $Certificates) {
-                    $Cert = [pscustomobject]@{
+                    $Cert = [PSCustomObject]@{
                         ComputerName  = $Computer
                         StoreName     = $StoreName
                         StoreLocation = $StoreLocation

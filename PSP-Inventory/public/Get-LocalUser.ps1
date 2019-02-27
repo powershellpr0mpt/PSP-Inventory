@@ -43,7 +43,7 @@ Function Get-LocalUser {
         foreach ($Computer in $Computername) {
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | ? {$_.SchemaClassName -eq 'User'}
             foreach ($User in $UserInfo) {
-                $Usr = [pscustomobject]@{
+                $Usr = [PSCustomObject]@{
                     ComputerName  = $Computer
                     UserName      = $User.Name[0]
                     Description   = $User.Description[0]

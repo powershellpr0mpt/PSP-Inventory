@@ -47,7 +47,7 @@ Function Get-RemoteScheduledTask {
                 $Root = $ST.GetFolder("\")
                 @($Root.GetTasks(0)) | ForEach-Object {
                     $xml = ([xml]$_.xml).task
-                    $SchdTsk = [pscustomobject] @{
+                    $SchdTsk = [PSCustomObject] @{
                         ComputerName   = $Computer
                         Task           = $_.Name
                         Author         = $xml.RegistrationInfo.Author
@@ -113,7 +113,7 @@ Function Get-RemoteScheduledTask {
                         Hidden         = $xml.Settings.Hidden
                         InventoryDate  = $Date
                     }
-                    $SchdTsk.PSTypeNames.Insert(0,'PSP.Inventory.ScheduledTask')
+                    $SchdTsk.PSTypeNames.Insert(0, 'PSP.Inventory.ScheduledTask')
                     $SchdTsk
                 }
             }

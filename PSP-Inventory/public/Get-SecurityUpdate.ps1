@@ -1,4 +1,37 @@
 Function Get-SecurityUpdate {
+    <#
+    .SYNOPSIS
+    Get all the security update information for local or remote machines
+
+    .DESCRIPTION
+    Get all the security update information for local or remote machines.
+    Requires the RemoteRegistry to be enabled on the machine.
+    Will look for 'Update','Rollup','Security Update','Service Pack' and 'HotFix'
+
+
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+
+    .EXAMPLE
+    Get-SecurityUpdate -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+
+    Description
+    -----------
+    Gets the security update information for both CONTOSO-SRV01 and CONTOSO-WEB01
+
+    .NOTES
+    Name: Get-SecurityUpdate.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 21-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+
     [OutputType('PSP.Inventory.SecurityUpdate')]
     [Cmdletbinding()] 
     param( 
@@ -12,26 +45,21 @@ Function Get-SecurityUpdate {
         foreach ($Computer in $ComputerName) { 
             $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
             foreach ($Path in $Paths) { 
-                #Create an instance of the Registry Object and open the HKLM base key 
                 try { 
-                    $reg = [microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer) 
+                    $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $Computer)
                 }
                 catch { 
                     $_ 
                     Continue 
                 } 
                 try {
-                    #Drill down into the Uninstall key using the OpenSubKey Method 
                     $regkey = $reg.OpenSubKey($Path)  
-                    #Retrieve an array of string that contain all the subkey names 
                     $subkeys = $regkey.GetSubKeyNames()      
-                    #Open each Subkey and use GetValue Method to return the required values for each 
                     foreach ($key in $subkeys) {   
                         $thisKey = $Path + "\\" + $key   
                         $thisSubKey = $reg.OpenSubKey($thisKey)   
-                        # prevent Objects with empty DisplayName 
                         $DisplayName = $thisSubKey.getValue("DisplayName")
-                        if ($DisplayName -AND $DisplayName -match '^Update for|rollup|^Security Update|^Service Pack|^HotFix') {
+                        if ($DisplayName -AND $DisplayName -match '^Update for|Rollup|^Security Update|^Service Pack|^HotFix') {
                             $Date = $thisSubKey.GetValue('InstallDate')
                             if ($Date) {
                                 Write-Verbose $Date 
@@ -50,8 +78,7 @@ Function Get-SecurityUpdate {
                                 "Security Update*" {$Description = 'Security Update'}
                                 Default {$Description = 'Unknown'}
                             }
-                            # create New Object with empty Properties 
-                            $Update = [pscustomobject] @{
+                            $Update = [PSCustomObject] @{
                                 ComputerName  = $Computer
                                 Type          = $Description
                                 HotFixID      = $HotFixID
@@ -59,7 +86,7 @@ Function Get-SecurityUpdate {
                                 Description   = $DisplayName
                                 InventoryDate = $Date
                             }
-                            $Update.PSTypeNames.Insert(0, 'PSP.Inventory.SecurityUpdate')
+                            $Update.PSTypeNames.Insert(0,'PSP.Inventory.SecurityUpdate')
                             $Update
                         } 
                     }   

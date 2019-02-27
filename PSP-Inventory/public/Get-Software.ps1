@@ -1,4 +1,36 @@
 Function Get-Software {
+    <#
+    .SYNOPSIS
+    Get the installed software for local or remote machines
+
+    .DESCRIPTION
+    Get the installed software for local or remote machines.
+    Requires the RemoteRegistry to be enabled on the machine.
+    Will look for both x86 and x64 installed paths.
+
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+
+    .EXAMPLE
+    Get-SecurityUpdate -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+
+    Description
+    -----------
+    Gets the software information for both CONTOSO-SRV01 and CONTOSO-WEB01
+
+    .NOTES
+    Name: Get-Software.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 21-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+
     [OutputType('PSP.Inventory.Software')]
     [Cmdletbinding()] 
     Param( 
@@ -14,26 +46,21 @@ Function Get-Software {
                 $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
                 foreach ($Path in $Paths) { 
                     Write-Verbose "Checking Path: $Path"
-                    # Create an instance of the Registry Object and open the HKLM base key 
                     try { 
-                        $reg = [microsoft.win32.registrykey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64') 
+                        $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64')
                     }
                     catch { 
                         Write-Error $_ 
                         Continue 
                     } 
-                    # Drill down into the Uninstall key using the OpenSubKey Method 
                     try {
                         $regkey = $reg.OpenSubKey($Path)  
-                        # Retrieve an array of string that contain all the subkey names 
                         $subkeys = $regkey.GetSubKeyNames()      
-                        # Open each Subkey and use GetValue Method to return the required values for each 
                         foreach ($key in $subkeys) {   
                             Write-Verbose "Key: $Key"
                             $thisKey = $Path + "\\" + $key 
                             try {  
                                 $thisSubKey = $reg.OpenSubKey($thisKey)   
-                                # Prevent Objects with empty DisplayName 
                                 $DisplayName = $thisSubKey.getValue("DisplayName")
                                 if ($DisplayName -AND $DisplayName -notmatch '^Update for|rollup|^Security Update|^Service Pack|^HotFix') {
                                     $Date = $thisSubKey.GetValue('InstallDate')
@@ -46,7 +73,6 @@ Function Get-Software {
                                             $Date = $Null
                                         }
                                     } 
-                                    # Create New Object with empty Properties 
                                     $Publisher = try {
                                         $thisSubKey.GetValue('Publisher').Trim()
                                     } 
@@ -84,7 +110,7 @@ Function Get-Software {
                                     catch {
                                         $thisSubKey.GetValue('HelpLink')
                                     }
-                                    $Software = [pscustomobject]@{
+                                    $Software = [PSCustomObject]@{
                                         ComputerName    = $Computer
                                         DisplayName     = $DisplayName
                                         Version         = $Version

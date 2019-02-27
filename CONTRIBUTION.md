@@ -7,7 +7,7 @@ Below are some guidelines that will help make the process as smooth as possible.
 * Submit a new issue, assuming one does not already exist.
   * Clearly describe the issue including steps to reproduce when it is a bug.
   * Make sure you fill in the earliest version that you know has the issue.
-* Fork the repository on GitLab.
+* Fork the repository on to your GitHub account.
 
 # Suggesting Enhancements
 I want to know what you think is missing from PSP-Inventory and how it can be made better.

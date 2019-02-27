@@ -1,4 +1,36 @@
 function Get-SysInfo {
+    <#
+    .SYNOPSIS
+    Get System information for local or remote machines
+
+    .DESCRIPTION
+    Get System information for local or remote machines.
+    Will query default information about the actual system, such as CPU & Memory and if it's virtual or physical
+    Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available
+
+    .PARAMETER ComputerName
+    Provide the computername(s) to query
+    Default value is the local machine
+
+    .EXAMPLE
+    Get-SysInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+
+    Description
+    -----------
+    Gets the System information for CONTOSO-SRV01 and CONTOSO-WEB01
+
+    .NOTES
+    Name: Get-SysInfo.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 24-02-2019
+    DateModified: 27-02-2019
+    Blog: http://powershellpr0mpt.com
+
+    .LINK
+    http://powershellpr0mpt.com
+    #>
+
     [OutputType('PSP.Inventory.SystemInfo')]
     [Cmdletbinding()] 
     param( 
@@ -15,62 +47,60 @@ function Get-SysInfo {
                 $Enclosure = Get-CimInstance -ClassName Win32_SystemEnclosure -ComputerName $Computer
                 $BIOS = Get-CimInstance -ClassName Win32_Bios -ComputerName $Computer
                 $General = [PSCustomObject]@{
-                    ComputerName = $Computer
-                    Manufacturer = $CS.Manufacturer
-                    Model = $CS.Model
-                    SystemType = $CS.SystemType
-                    State = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual"){'Virtual'}else{'Physical'}
-                    SerialNumber = $Enclosure.SerialNumber
-                    ChassisType = (Convert-ChassisType $Enclosure.ChassisTypes)
-                    Description = $Enclosure.Description
-                    NumberofCores = $CS.NumberOfProcessors
+                    ComputerName              = $Computer
+                    Manufacturer              = $CS.Manufacturer
+                    Model                     = $CS.Model
+                    SystemType                = $CS.SystemType
+                    State                     = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual") {'Virtual'}else {'Physical'}
+                    SerialNumber              = $Enclosure.SerialNumber
+                    ChassisType               = (Convert-ChassisType $Enclosure.ChassisTypes)
+                    Description               = $Enclosure.Description
+                    NumberofCores             = $CS.NumberOfProcessors
                     NumberOfLogicalProcessors = $CS.NumberOfLogicalProcessors
-                    TotalPhysicalMemoryGB = ([math]::round(($CS.TotalPhysicalMemory / 1GB),0))
-                    BIOSManufacturer = $BIOS.Manufacturer
-                    BIOSName = $BIOS.Name
-                    BIOSSerialNumber = $BIOS.SerialNumber
-                    BIOSVersion = $BIOS.SMBIOSBIOSVersion
-                    InventoryDate = $Date
+                    TotalPhysicalMemoryGB     = ([math]::round(($CS.TotalPhysicalMemory / 1GB), 0))
+                    BIOSManufacturer          = $BIOS.Manufacturer
+                    BIOSName                  = $BIOS.Name
+                    BIOSSerialNumber          = $BIOS.SerialNumber
+                    BIOSVersion               = $BIOS.SMBIOSBIOSVersion
+                    InventoryDate             = $Date
                 }
-                $General.PSTypeNames.Insert(0,'PSP.Inventory.SystemInfo')
+                $General.PSTypeNames.Insert(0, 'PSP.Inventory.SystemInfo')
                 $General
-            } catch [Microsoft.Management.Infrastructure.CimException] {
+            }
+            catch [Microsoft.Management.Infrastructure.CimException] {
                 Write-Warning "'$Computer' does not have CIM access, reverting to DCOM instead"
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
-                try
-                {
+                try {
                     $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -ErrorAction Stop
                     $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure 
                     $BIOS = Get-CimInstance -CimSession $CimSession -ClassName Win32_Bios
                     $General = [PSCustomObject]@{
-                        ComputerName = $Computer
-                        Manufacturer = $CS.Manufacturer
-                        Model = $CS.Model
-                        SystemType = $CS.SystemType
-                        State = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual"){'Virtual'}else{'Physical'}
-                        SerialNumber = $Enclosure.SerialNumber
-                        ChassisType = (Convert-ChassisType $Enclosure.ChassisTypes)
-                        Description = $Enclosure.Description
-                        NumberofCores = $CS.NumberOfProcessors
+                        ComputerName              = $Computer
+                        Manufacturer              = $CS.Manufacturer
+                        Model                     = $CS.Model
+                        SystemType                = $CS.SystemType
+                        State                     = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual") {'Virtual'}else {'Physical'}
+                        SerialNumber              = $Enclosure.SerialNumber
+                        ChassisType               = (Convert-ChassisType $Enclosure.ChassisTypes)
+                        Description               = $Enclosure.Description
+                        NumberofCores             = $CS.NumberOfProcessors
                         NumberOfLogicalProcessors = $CS.NumberOfLogicalProcessors
-                        TotalPhysicalMemoryGB = ([math]::round(($CS.TotalPhysicalMemory / 1GB),0))
-                        BIOSManufacturer = $BIOS.Manufacturer
-                        BIOSName = $BIOS.Name
-                        BIOSSerialNumber = $BIOS.SerialNumber
-                        BIOSVersion = $BIOS.SMBIOSBIOSVersion
-                        InventoryDate = $Date
+                        TotalPhysicalMemoryGB     = ([math]::round(($CS.TotalPhysicalMemory / 1GB), 0))
+                        BIOSManufacturer          = $BIOS.Manufacturer
+                        BIOSName                  = $BIOS.Name
+                        BIOSSerialNumber          = $BIOS.SerialNumber
+                        BIOSVersion               = $BIOS.SMBIOSBIOSVersion
+                        InventoryDate             = $Date
                     }
-                    $General.PSTypeNames.Insert(0,'PSP.Inventory.SystemInfo')
+                    $General.PSTypeNames.Insert(0, 'PSP.Inventory.SystemInfo')
                     $General 
                 }
-                catch
-                {
+                catch {
                     Write-Warning "Unable to get WMI properties for computer '$Computer'"
                 }
             }
-            catch
-            {
+            catch {
                 Write-Warning "Unable to get WMI properties for computer '$Computer'"
             }
         }
