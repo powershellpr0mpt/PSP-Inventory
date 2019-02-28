@@ -25,6 +25,7 @@
 The PoshRSJob module will allow parallel collection of data instead of sequential through the use of RunSpaces.
   The ImportExcel module allows you to Export the collected data to Excel and immediately manipulate this data if required, without actually having Excel installed.
   Keep an eye out on this location for more information on how to do this!
+- Add examples on how to use the module [code/GIFs]
 
 ### Compatibility
 
