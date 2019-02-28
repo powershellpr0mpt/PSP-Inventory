@@ -12,7 +12,7 @@
 RootModule = 'PSP-Inventory.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1.0'
+ModuleVersion = '0.9.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -24,7 +24,7 @@ GUID = '778139c7-99bd-41c5-9bcf-ec32fe7e7d56'
 Author = 'Robert Prust'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'powershellpr0mpt.com'
 
 # Copyright statement for this module
 Copyright = '(c) Robert Prust. All rights reserved.'
@@ -95,19 +95,19 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        # Tags = @('Inventory','PSEdition_Desktop','Windows')
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        # LicenseUri = 'https://github.com/powershellpr0mpt/PSP-Inventory/LICENSE.md'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        # ProjectUri = 'https://github.com/powershellpr0mpt/PSP-Inventory'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        # ReleaseNotes = 'https://github.com/powershellpr0mpt/PSP-Inventory/CHANGELOG.md'
 
     } # End of PSData hashtable
 
