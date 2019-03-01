@@ -44,10 +44,10 @@ function Get-OSInfo {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
             try {
-                $TimeZone = Get-CimInstance -ClassName Win32_TimeZone -ComputerName $Computer -ErrorAction Stop
-                $OS = Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $Computer
-                $ProductKey = (Get-CimInstance -Query 'SELECT * FROM SoftwareLicensingService' -ComputerName $Computer).OA3xOriginalProductKey
-                $PageFile = Get-CimInstance -ClassName Win32_PageFile -ComputerName $Computer
+                $TimeZone = Get-CimInstance -ClassName Win32_TimeZone -Property Caption -ComputerName $Computer -ErrorAction Stop
+                $OS = Get-CimInstance -ClassName Win32_OperatingSystem -Property Caption, Version, ServicePackMajorVersion, ServicePackMinorVersion, LastBootUpTime, OSArchitecture -ComputerName $Computer
+                $ProductKey = (Get-CimInstance -Query 'SELECT OA3xOriginalProductKey FROM SoftwareLicensingService' -ComputerName $Computer).OA3xOriginalProductKey
+                $PageFile = Get-CimInstance -ClassName Win32_PageFile -Property Name, FileSize -ComputerName $Computer
                 $OperatingSystem = [PSCustomObject]@{
                     ComputerName   = $Computer
                     Caption        = $OS.Caption
@@ -69,10 +69,10 @@ function Get-OSInfo {
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
                 try {
-                    $TimeZone = Get-CimInstance -CimSession $CimSession -ClassName Win32_TimeZone -ErrorAction Stop
-                    $OS = Get-CimInstance -CimSession $CimSession -ClassName Win32_OperatingSystem
-                    $ProductKey = (Get-CimInstance -CimSession $CimSession -Query 'SELECT * FROM SoftwareLicensingService').OA3xOriginalProductKey
-                    $PageFile = Get-CimInstance -CimSession $CimSession -ClassName Win32_PageFile
+                    $TimeZone = Get-CimInstance -CimSession $CimSession -ClassName Win32_TimeZone -Property Caption -ErrorAction Stop
+                    $OS = Get-CimInstance -CimSession $CimSession -ClassName Win32_OperatingSystem -Property Caption, Version, ServicePackMajorVersion, ServicePackMinorVersion, LastBootUpTime, OSArchitecture
+                    $ProductKey = (Get-CimInstance -CimSession $CimSession -Query 'SELECT OA3xOriginalProductKey FROM SoftwareLicensingService').OA3xOriginalProductKey
+                    $PageFile = Get-CimInstance -CimSession $CimSession -ClassName Win32_PageFile -Property Name, FileSize
                     $OperatingSystem = [PSCustomObject]@{
                         ComputerName   = $Computer
                         Caption        = $OS.Caption

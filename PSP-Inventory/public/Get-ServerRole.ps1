@@ -44,7 +44,7 @@ Function Get-ServerRole {
         foreach ($Computer in $Computername) {
             $Computer = $Computer.ToUpper()
             Try {
-                Get-CimInstance -ClassName Win32_ServerFeature -ComputerName $Computer -ErrorAction Stop | ForEach-Object {
+                Get-CimInstance -ClassName Win32_ServerFeature -Property Id, Name -ComputerName $Computer -ErrorAction Stop | ForEach-Object {
                     $Role = [PSCustomObject]@{
                         ComputerName  = $Computer
                         ID            = $_.Id
@@ -60,7 +60,7 @@ Function Get-ServerRole {
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
                 try {
-                    Get-CimInstance -CimSession $CimSession -ClassName Win32_ServerFeature -ErrorAction Stop | ForEach-Object {
+                    Get-CimInstance -CimSession $CimSession -ClassName Win32_ServerFeature -Property Id, Name -ErrorAction Stop | ForEach-Object {
                         $Role = [PSCustomObject]@{
                             ComputerName  = $Computer
                             ID            = $_.Id
