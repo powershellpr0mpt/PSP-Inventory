@@ -23,7 +23,7 @@ Function Get-RemoteScheduledTask {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 23-02-2019
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -38,7 +38,7 @@ Function Get-RemoteScheduledTask {
     )
     begin {
         $ST = New-Object -ComObject Schedule.Service
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     process {
         foreach ($Computer in $ComputerName) {
@@ -112,7 +112,7 @@ Function Get-RemoteScheduledTask {
                         Arguments      = $xml.Actions.Exec.Arguments
                         StartDirectory = $xml.Actions.Exec.WorkingDirectory
                         Hidden         = $xml.Settings.Hidden
-                        InventoryDate  = $Date
+                        InventoryDate  = $InventoryDate
                     }
                     $SchdTsk.PSTypeNames.Insert(0, 'PSP.Inventory.ScheduledTask')
                     $SchdTsk

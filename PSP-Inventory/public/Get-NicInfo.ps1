@@ -28,7 +28,7 @@ function Get-NicInfo {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 20-12-2018
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -43,24 +43,18 @@ function Get-NicInfo {
         [switch]$Drivers
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
-    process
-    {
-        foreach ($Computer in $ComputerName)
-        {
+    process {
+        foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
-            try
-            {
+            try {
                 $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -ComputerName $Computer -Filter "PhysicalAdapter=True" -ErrorAction Stop
-                if ($Drivers)
-                {
+                if ($Drivers) {
                     $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -ComputerName $Computer -ErrorAction Stop
                 }
-                foreach ($Adapter in $Adapters)
-                {
-                    if ($Drivers)
-                    {
+                foreach ($Adapter in $Adapters) {
+                    if ($Drivers) {
                         $DriverInfo = Get-CimInstance -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'" -ComputerName $Computer
                     }
                     $Config = Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -ComputerName $Computer
@@ -86,37 +80,30 @@ function Get-NicInfo {
                         DriverDescription = if ($Drivers) {$DriverInfo.Description}else {''}
                         DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                         NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
-                        InventoryDate = $Date
+                        InventoryDate     = $InventoryDate
                     }
-                    $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
+                    $NIC.PSTypeNames.Insert(0, 'PSP.Inventory.NIC')
                     $NIC
                 }
             }
-            catch [Microsoft.Management.Infrastructure.CimException]
-            {
+            catch [Microsoft.Management.Infrastructure.CimException] {
                 Write-Warning "'$Computer' does not have CIM access, reverting to DCOM instead"
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
 
-                try
-                {
+                try {
                     $Adapters = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapter -Filter "Availability =3"  -ErrorAction Stop | Where-Object {$_.AdapterTypeId -match '0|9'}
-                    if ($Drivers)
-                    {
+                    if ($Drivers) {
                         $SignedDrivers = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriverCIMDataFile
                     }
-                    foreach ($Adapter in $Adapters)
-                    {
-                        if ($Adapter.Speed)
-                        {
+                    foreach ($Adapter in $Adapters) {
+                        if ($Adapter.Speed) {
                             $LinkSpeed = $Adapter.Speed / 1000000
                         }
-                        else
-                        {
+                        else {
                             $LinkSpeed = (Get-CimInstance -CimSession $CimSession -Namespace "root/wmi" -Query "SELECT * FROM MSNdis_LinkSpeed" | Where-Object {$_.InstanceName -eq $Adapter.Name}).NdisLinkSpeed / 1000
                         }
-                        if ($Drivers)
-                        {
+                        if ($Drivers) {
                             $DriverInfo = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'"
                         }
                         $Config = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'"
@@ -142,19 +129,17 @@ function Get-NicInfo {
                             DriverDescription = if ($Drivers) {$DriverInfo.Description}else {''}
                             DriverProvider    = if ($Drivers) {$DriverInfo.DriverProviderName}else {''}
                             NicManufacturer   = if ($Drivers) {$DriverInfo.Manufacturer}else {''}
-                            InventoryDate = $Date
+                            InventoryDate     = $InventoryDate
                         }
-                        $NIC.PSTypeNames.Insert(0,'PSP.Inventory.NIC')
+                        $NIC.PSTypeNames.Insert(0, 'PSP.Inventory.NIC')
                         $NIC    
                     }
                 }
-                catch
-                {
+                catch {
                     Write-Warning "Unable to get WMI properties for computer '$Computer'"
                 }
             }
-            catch
-            {
+            catch {
                 Write-Warning "Unable to get WMI properties for computer '$Computer'"
             }
         }

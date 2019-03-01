@@ -24,7 +24,7 @@ Function Get-Software {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 21-02-2019
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -38,7 +38,7 @@ Function Get-Software {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )         
     Begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     Process {     
         foreach ($Computer in $Computername) {
@@ -122,7 +122,7 @@ Function Get-Software {
                                         InstallSource   = $InstallSource
                                         HelpLink        = $thisSubKey.GetValue('HelpLink')
                                         EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize') * 1024) / 1MB, 2))
-                                        InventoryDate   = $Date
+                                        InventoryDate   = $InventoryDate
                                     }
                                     $Software.PSTypeNames.Insert(0, 'PSP.Inventory.Software')
                                     $Software

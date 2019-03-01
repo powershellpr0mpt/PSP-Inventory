@@ -23,7 +23,7 @@ Function Get-ServerRole {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 22-12-2018
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -37,7 +37,7 @@ Function Get-ServerRole {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     process {
         foreach ($Computer in $Computername) {
@@ -48,7 +48,7 @@ Function Get-ServerRole {
                         ComputerName  = $Computer
                         ID            = $_.Id
                         Name          = $_.Name
-                        InventoryDate = $Date
+                        InventoryDate = $InventoryDate
                     }
                     $Role.PSTypeNames.Insert(0, 'PSP.Inventory.ServerRole')
                     $Role
@@ -64,7 +64,7 @@ Function Get-ServerRole {
                             ComputerName  = $Computer
                             ID            = $_.Id
                             Name          = $_.Name
-                            InventoryDate = $Date
+                            InventoryDate = $InventoryDate
                         }
                         $Role.PSTypeNames.Insert(0, 'PSP.Inventory.ServerRole')
                         $Role

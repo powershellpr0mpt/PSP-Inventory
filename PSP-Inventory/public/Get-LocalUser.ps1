@@ -23,7 +23,7 @@ Function Get-LocalUser {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 20-02-2019
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -37,7 +37,7 @@ Function Get-LocalUser {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     process {
         foreach ($Computer in $Computername) {
@@ -51,7 +51,7 @@ Function Get-LocalUser {
                     LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
                     SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
                     UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
-                    InventoryDate = $Date
+                    InventoryDate = $InventoryDate
                 }
                 $Usr.PSTypeNames.Insert(0, 'PSP.Inventory.LocalUser')
                 $Usr

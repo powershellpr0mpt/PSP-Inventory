@@ -24,7 +24,7 @@ function Get-DiskInfo {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 22-12-2018
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -38,18 +38,14 @@ function Get-DiskInfo {
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
-    process
-    {
-        foreach ($Computer in $ComputerName)
-        {
+    process {
+        foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
-            try
-            {
+            try {
                 $Volumes = Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType = 3" -ComputerName $Computer -ErrorAction Stop
-                foreach ($Volume in $Volumes)
-                {
+                foreach ($Volume in $Volumes) {
                     $Partition = Get-CimAssociatedInstance -InputObject $Volume -ResultClass Win32_DiskPartition
                     $Disk = Get-CimAssociatedInstance -InputObject $Partition -ResultClassName Win32_DiskDrive
 
@@ -72,23 +68,20 @@ function Get-DiskInfo {
                         PartitionNumber    = $Partition.Index
                         IsPrimaryPartition = $Partition.PrimaryPartition
                         IsBootPartition    = $Partition.BootPartition
-                        InventoryDate      = $Date
+                        InventoryDate      = $InventoryDate
                     }
-                    $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
+                    $Dsk.PSTypeNames.Insert(0, 'PSP.Inventory.Disk')
                     $Dsk
                 }
             }
-            catch [Microsoft.Management.Infrastructure.CimException]
-            {
+            catch [Microsoft.Management.Infrastructure.CimException] {
                 Write-Warning "'$Computer' does not have CIM access, reverting to DCOM instead"
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
 
-                try
-                {
+                try {
                     $Volumes = Get-CimInstance -CimSession $CimSession -ClassName Win32_LogicalDisk -Filter "DriveType = 3" -ErrorAction Stop
-                    foreach ($Volume in $Volumes)
-                    {
+                    foreach ($Volume in $Volumes) {
                         $Partition = Get-CimAssociatedInstance -CimSession $CimSession -InputObject $Volume -ResultClass Win32_DiskPartition
                         $Disk = Get-CimAssociatedInstance -CimSession $CimSession -InputObject $Partition -ResultClassName Win32_DiskDrive
 
@@ -111,19 +104,17 @@ function Get-DiskInfo {
                             PartitionNumber    = $Partition.Index
                             IsPrimaryPartition = $Partition.PrimaryPartition
                             IsBootPartition    = $Partition.BootPartition
-                            InventoryDate = $Date
+                            InventoryDate      = $InventoryDate
                         }
-                        $Dsk.PSTypeNames.Insert(0,'PSP.Inventory.Disk')
+                        $Dsk.PSTypeNames.Insert(0, 'PSP.Inventory.Disk')
                         $Dsk    
                     }
                 }
-                catch
-                {
+                catch {
                     Write-Warning "Unable to get WMI properties for computer '$Computer'"
                 }
             }
-            catch
-            {
+            catch {
                 Write-Warning "Unable to get WMI properties for computer '$Computer'"
             }
         }
