@@ -26,10 +26,10 @@ Function Get-SecurityUpdate {
     Module: PSP-Inventory
     DateCreated: 21-02-2019
     DateModified: 01-03-2019
-    Blog: http://powershellpr0mpt.com
+    Blog: https://powershellpr0mpt.com
 
     .LINK
-    http://powershellpr0mpt.com
+    https://powershellpr0mpt.com
     #>
 
     [OutputType('PSP.Inventory.SecurityUpdate')]

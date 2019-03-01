@@ -32,10 +32,10 @@ Function Get-RemoteCertificate {
     Module: PSP-Inventory
     DateCreated: 22-02-2019
     DateModified: 01-03-2019
-    Blog: http://powershellpr0mpt.com
+    Blog: https://powershellpr0mpt.com
 
     .LINK
-    http://powershellpr0mpt.com
+    https://powershellpr0mpt.com
     #>
     
     [OutputType('PSP.Inventory.Certificate')]
@@ -69,6 +69,8 @@ Function Get-RemoteCertificate {
                         Issuer        = $Certificate.Issuer
                         NotBefore     = $Certificate.NotBefore
                         NotAfter      = $Certificate.NotAfter
+                        Subject       = $Certificate.Subject
+                        HasPrivateKey = $Certificate.HasPrivateKey
                         Certificate   = $Certificate
                         InventoryDate = $InventoryDate
                     }

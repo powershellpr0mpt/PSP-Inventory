@@ -29,10 +29,10 @@ function Get-NicInfo {
     Module: PSP-Inventory
     DateCreated: 20-12-2018
     DateModified: 01-03-2019
-    Blog: http://powershellpr0mpt.com
+    Blog: https://powershellpr0mpt.com
 
     .LINK
-    http://powershellpr0mpt.com
+    https://powershellpr0mpt.com
     #>
     
     [OutputType('PSP.Inventory.NIC')]

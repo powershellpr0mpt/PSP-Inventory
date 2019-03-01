@@ -6,11 +6,11 @@
 
         Name: PSP-Inventory
         Author: Robert Prust
-        Version: 0.1.0
-        Blog: http://powershellpr0mpt.com
+        Version: 0.9.1
+        Blog: https://powershellpr0mpt.com
 
     .LINK
-        http://powershellpr0mpt.com
+        https://powershellpr0mpt.com
 #>
 
 #Function Loader

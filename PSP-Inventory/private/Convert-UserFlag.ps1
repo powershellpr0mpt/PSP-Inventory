@@ -24,10 +24,10 @@ Function Convert-UserFlag
     Module: PSP-Inventory
     DateCreated: 20-02-2019
     DateModified: 27-02-2019
-    Blog: http://powershellpr0mpt.com
+    Blog: https://powershellpr0mpt.com
 
     .LINK
-    http://powershellpr0mpt.com
+    https://powershellpr0mpt.com
     #>
 
     [cmdletbinding()]
