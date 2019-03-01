@@ -50,15 +50,15 @@ function Get-NicInfo {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
             try {
-                $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -ComputerName $Computer -Filter "PhysicalAdapter=True" -ErrorAction Stop
+                $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -Filter "PhysicalAdapter=True" -Property Name, NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ComputerName $Computer  -ErrorAction Stop
                 if ($Drivers) {
-                    $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -ComputerName $Computer -ErrorAction Stop
+                    $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -Property Antecedent -ComputerName $Computer -ErrorAction Stop
                 }
                 foreach ($Adapter in $Adapters) {
                     if ($Drivers) {
-                        $DriverInfo = Get-CimInstance -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'" -ComputerName $Computer
+                        $DriverInfo = Get-CimInstance -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'" -Property InfName, DriverVersion, DriverDate, Description, DriverProviderName, Manufacturer, DeviceId -ComputerName $Computer
                     }
-                    $Config = Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -ComputerName $Computer
+                    $Config = Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -Property IPAddress, DHCPEnabled, DHCPServer, DNSServerSearchOrder, DefaultIPGateway, IPSubnet -ComputerName $Computer
 
                     $NIC = [PSCustomObject]@{
                         ComputerName      = $Computer
@@ -93,7 +93,7 @@ function Get-NicInfo {
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
 
                 try {
-                    $Adapters = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapter -Filter "Availability =3"  -ErrorAction Stop | Where-Object {$_.AdapterTypeId -match '0|9'}
+                    $Adapters = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapter -Filter "Availability =3" -Property Name, NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ErrorAction Stop | Where-Object {$_.AdapterTypeId -match '0|9'}
                     if ($Drivers) {
                         $SignedDrivers = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriverCIMDataFile
                     }
@@ -105,9 +105,9 @@ function Get-NicInfo {
                             $LinkSpeed = (Get-CimInstance -CimSession $CimSession -Namespace "root/wmi" -Query "SELECT * FROM MSNdis_LinkSpeed" | Where-Object {$_.InstanceName -eq $Adapter.Name}).NdisLinkSpeed / 1000
                         }
                         if ($Drivers) {
-                            $DriverInfo = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'"
+                            $DriverInfo = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriver -Filter "Description='$($Adapter.Name)'" -Property InfName, DriverVersion, DriverDate, Description, DriverProviderName, Manufacturer, DeviceId
                         }
-                        $Config = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'"
+                        $Config = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapterConfiguration -Filter "Index = '$($Adapter.DeviceId)'" -Property IPAddress, DHCPEnabled, DHCPServer, DNSServerSearchOrder, DefaultIPGateway, IPSubnet
 
                         $NIC = [PSCustomObject]@{
                             ComputerName      = $Computer

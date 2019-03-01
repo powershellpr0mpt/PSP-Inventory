@@ -45,9 +45,9 @@ function Get-SysInfo {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
             try {
-                $CS = Get-CimInstance -ClassName Win32_ComputerSystem -ComputerName $Computer -ErrorAction Stop
-                $Enclosure = Get-CimInstance -ClassName Win32_SystemEnclosure -ComputerName $Computer
-                $BIOS = Get-CimInstance -ClassName Win32_Bios -ComputerName $Computer
+                $CS = Get-CimInstance -ClassName Win32_ComputerSystem -Property Manufacturer, Model, SystemType, NumberOfProcessors, NumberOfLogicalProcessors, TotalPhysicalMemory -ComputerName $Computer -ErrorAction Stop
+                $Enclosure = Get-CimInstance -ClassName Win32_SystemEnclosure -Property SerialNumber, ChassisTypes, Description -ComputerName $Computer
+                $BIOS = Get-CimInstance -ClassName Win32_Bios -Property Name, Manufacturer, SerialNumber, SMBIOSBIOSVersion -ComputerName $Computer
                 $General = [PSCustomObject]@{
                     ComputerName              = $Computer
                     Manufacturer              = $CS.Manufacturer
@@ -74,9 +74,9 @@ function Get-SysInfo {
                 $CimOptions = New-CimSessionOption -Protocol DCOM
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
                 try {
-                    $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -ErrorAction Stop
-                    $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure
-                    $BIOS = Get-CimInstance -CimSession $CimSession -ClassName Win32_Bios
+                    $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property Manufacturer, Model, SystemType, NumberOfProcessors, NumberOfLogicalProcessors, TotalPhysicalMemory -ErrorAction Stop
+                    $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure -Property SerialNumber, ChassisTypes, Description
+                    $BIOS = Get-CimInstance -CimSession $CimSession -ClassName Win32_Bios -Property Name, Manufacturer, SerialNumber, SMBIOSBIOSVersion
                     $General = [PSCustomObject]@{
                         ComputerName              = $Computer
                         Manufacturer              = $CS.Manufacturer
