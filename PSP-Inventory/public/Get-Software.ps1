@@ -41,7 +41,8 @@ Function Get-Software {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     Process {     
-        foreach ($Computer in $Computername) { 
+        foreach ($Computer in $Computername) {
+            $Computer = $Computer.ToUpper()
             if (Test-Connection -ComputerName $Computer -Count 1 -Quiet) {
                 $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
                 foreach ($Path in $Paths) { 

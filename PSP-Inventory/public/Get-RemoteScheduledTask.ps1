@@ -42,6 +42,7 @@ Function Get-RemoteScheduledTask {
     }
     process {
         foreach ($Computer in $ComputerName) {
+            $Computer = $Computer.ToUpper()
             try {
                 $ST.Connect($Computer)
                 $Root = $ST.GetFolder("\")

@@ -40,7 +40,8 @@ Function Get-ServerRole {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
     process {
-        foreach ($Computer in $Computername) { 
+        foreach ($Computer in $Computername) {
+            $Computer = $Computer.ToUpper()
             Try {
                 Get-CimInstance -ClassName Win32_ServerFeature -ComputerName $Computer -ErrorAction Stop | ForEach-Object {
                     $Role = [PSCustomObject]@{

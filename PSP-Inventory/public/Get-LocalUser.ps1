@@ -41,6 +41,7 @@ Function Get-LocalUser {
     }
     process {
         foreach ($Computer in $Computername) {
+            $Computer = $Computer.ToUpper()
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | ? {$_.SchemaClassName -eq 'User'}
             foreach ($User in $UserInfo) {
                 $Usr = [PSCustomObject]@{

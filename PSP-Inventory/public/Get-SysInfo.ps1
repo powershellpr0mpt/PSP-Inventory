@@ -41,7 +41,8 @@ function Get-SysInfo {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
-        foreach ($Computer in $ComputerName) { 
+        foreach ($Computer in $ComputerName) {
+            $Computer = $Computer.ToUpper()
             try {
                 $CS = Get-CimInstance -ClassName Win32_ComputerSystem -ComputerName $Computer -ErrorAction Stop
                 $Enclosure = Get-CimInstance -ClassName Win32_SystemEnclosure -ComputerName $Computer
