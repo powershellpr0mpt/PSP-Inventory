@@ -50,7 +50,7 @@ function Get-NicInfo {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
             try {
-                $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -Filter "PhysicalAdapter=True" -Property NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ComputerName $Computer  -ErrorAction Stop
+                $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -Filter "PhysicalAdapter=True" -Property Name, NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ComputerName $Computer  -ErrorAction Stop
                 if ($Drivers) {
                     $SignedDrivers = Get-CimInstance -ClassName Win32_PnPSignedDriverCIMDataFile -Property Antecedent -ComputerName $Computer -ErrorAction Stop
                 }
@@ -93,7 +93,7 @@ function Get-NicInfo {
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
 
                 try {
-                    $Adapters = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapter -Filter "Availability =3" -Property NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ErrorAction Stop | Where-Object {$_.AdapterTypeId -match '0|9'}
+                    $Adapters = Get-CimInstance -CimSession $CimSession -ClassName Win32_NetworkAdapter -Filter "Availability =3" -Property Name, NetConnectionID, DeviceId, PhysicalAdapter, NetConnectionStatus, Speed, MacAddress -ErrorAction Stop | Where-Object {$_.AdapterTypeId -match '0|9'}
                     if ($Drivers) {
                         $SignedDrivers = Get-CimInstance -CimSession $CimSession -ClassName Win32_PnPSignedDriverCIMDataFile
                     }
