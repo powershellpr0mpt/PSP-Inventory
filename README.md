@@ -11,7 +11,7 @@
 
 ### To Contribute
 
-[Please see the following article](CONTRIBUTION.md)
+[Please see the following article](CONTRIBUTING.md)
 
 ### License
 
