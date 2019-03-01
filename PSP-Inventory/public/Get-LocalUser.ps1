@@ -2,22 +2,22 @@ Function Get-LocalUser {
     <#
     .SYNOPSIS
     Get all local users for local or remote machines
-    
+
     .DESCRIPTION
     Get all local users for local or remote machines.
     Provides extra information about the actual user based on the user's settings
-    
+
     .PARAMETER ComputerName
     Provide the computername(s) to query
     Default value is the local machine
-    
+
     .EXAMPLE
     Get-LocalUser -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
-    
+
     Description
     -----------
     Gets the local users for both CONTOSO-SRV01 and CONTOSO-WEB01
-    
+
     .NOTES
     Name: Get-LocalUser.ps1
     Author: Robert Prüst
@@ -29,11 +29,12 @@ Function Get-LocalUser {
     .LINK
     https://powershellpr0mpt.com
     #>
-    
+
     [OutputType('PSP.Inventory.LocalUser')]
-    [Cmdletbinding()] 
-    Param( 
+    [Cmdletbinding()]
+    Param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullorEmpty()]
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {

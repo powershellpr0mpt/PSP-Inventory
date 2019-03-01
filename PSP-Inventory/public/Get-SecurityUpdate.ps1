@@ -33,41 +33,42 @@ Function Get-SecurityUpdate {
     #>
 
     [OutputType('PSP.Inventory.SecurityUpdate')]
-    [Cmdletbinding()] 
-    param( 
-        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
+    [Cmdletbinding()]
+    param(
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullorEmpty()]
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
         $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
-    }   
-    process {           
+    }
+    process {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
-            $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
-            foreach ($Path in $Paths) { 
-                try { 
+            $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")
+            foreach ($Path in $Paths) {
+                try {
                     $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $Computer)
                 }
-                catch { 
-                    $_ 
-                    Continue 
-                } 
+                catch {
+                    $_
+                    Continue
+                }
                 try {
-                    $regkey = $reg.OpenSubKey($Path)  
-                    $subkeys = $regkey.GetSubKeyNames()      
-                    foreach ($key in $subkeys) {   
-                        $thisKey = $Path + "\\" + $key   
-                        $thisSubKey = $reg.OpenSubKey($thisKey)   
+                    $regkey = $reg.OpenSubKey($Path)
+                    $subkeys = $regkey.GetSubKeyNames()
+                    foreach ($key in $subkeys) {
+                        $thisKey = $Path + "\\" + $key
+                        $thisSubKey = $reg.OpenSubKey($thisKey)
                         $DisplayName = $thisSubKey.getValue("DisplayName")
                         if ($DisplayName -AND $DisplayName -match '^Update for|Rollup|^Security Update|^Service Pack|^HotFix') {
                             $Date = $thisSubKey.GetValue('InstallDate')
                             if ($Date) {
-                                Write-Verbose $Date 
+                                Write-Verbose $Date
                                 $Date = $Date -replace '(\d{4})(\d{2})(\d{2})', '$1-$2-$3'
-                                Write-Verbose $Date 
+                                Write-Verbose $Date
                                 $Date = Get-Date $Date
-                            } 
+                            }
                             if ($DisplayName -match '(?<DisplayName>.*)\((?<KB>KB.*?)\).*') {
                                 $DisplayName = $Matches.DisplayName
                                 $HotFixID = $Matches.KB
@@ -89,12 +90,12 @@ Function Get-SecurityUpdate {
                             }
                             $Update.PSTypeNames.Insert(0, 'PSP.Inventory.SecurityUpdate')
                             $Update
-                        } 
-                    }   
-                    $reg.Close() 
+                        }
+                    }
+                    $reg.Close()
                 }
-                catch {}                  
-            }  
-        } 
-    } 
+                catch {}
+            }
+        }
+    }
 }

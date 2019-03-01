@@ -1,23 +1,23 @@
 Function Get-RemoteScheduledTask {
     <#
     .SYNOPSIS
-    Get Scheduled task information for local or remote machines 
-    
+    Get Scheduled task information for local or remote machines
+
     .DESCRIPTION
-    Get Scheduled task information for local or remote machines. 
+    Get Scheduled task information for local or remote machines.
     Will get all scheduled tasks in the root folder
-    
+
     .PARAMETER ComputerName
     Provide the computername(s) to query
     Default value is the local machine
-    
+
     .EXAMPLE
     Get-RemoteScheduledTask -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
-    
+
     Description
     -----------
     Gets the Scheduled Tasks for CONTOSO-SRV01 and CONTOSO-WEB01
-    
+
     .NOTES
     Name: Get-RemoteScheduledTask.ps1
     Author: Robert Prüst
@@ -29,11 +29,12 @@ Function Get-RemoteScheduledTask {
     .LINK
     https://powershellpr0mpt.com
     #>
-    
-    [OutputType('PSP.Inventory.ScheduledTask')] 
+
+    [OutputType('PSP.Inventory.ScheduledTask')]
     [cmdletbinding()]
-    param (    
+    param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullorEmpty()]
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
@@ -52,7 +53,7 @@ Function Get-RemoteScheduledTask {
                         ComputerName   = $Computer
                         Task           = $_.Name
                         Author         = $xml.RegistrationInfo.Author
-                        RunAs          = $xml.Principals.Principal.UserId                        
+                        RunAs          = $xml.Principals.Principal.UserId
                         Enabled        = $_.Enabled
                         State          = Switch ($_.State) {
                             0 {'Unknown'}
@@ -123,4 +124,4 @@ Function Get-RemoteScheduledTask {
             }
         }
     }
-}        
+}
