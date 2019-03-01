@@ -25,7 +25,7 @@ Function Get-SecurityUpdate {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 21-02-2019
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -39,7 +39,7 @@ Function Get-SecurityUpdate {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
         foreach ($Computer in $ComputerName) {
@@ -85,9 +85,9 @@ Function Get-SecurityUpdate {
                                 HotFixID      = $HotFixID
                                 InstalledOn   = $Date
                                 Description   = $DisplayName
-                                InventoryDate = $Date
+                                InventoryDate = $InventoryDate
                             }
-                            $Update.PSTypeNames.Insert(0,'PSP.Inventory.SecurityUpdate')
+                            $Update.PSTypeNames.Insert(0, 'PSP.Inventory.SecurityUpdate')
                             $Update
                         } 
                     }   

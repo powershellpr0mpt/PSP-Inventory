@@ -24,7 +24,7 @@ function Get-SysInfo {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 24-02-2019
-    DateModified: 27-02-2019
+    DateModified: 01-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -38,7 +38,7 @@ function Get-SysInfo {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
         foreach ($Computer in $ComputerName) {
@@ -63,7 +63,7 @@ function Get-SysInfo {
                     BIOSName                  = $BIOS.Name
                     BIOSSerialNumber          = $BIOS.SerialNumber
                     BIOSVersion               = $BIOS.SMBIOSBIOSVersion
-                    InventoryDate             = $Date
+                    InventoryDate             = $InventoryDate
                 }
                 $General.PSTypeNames.Insert(0, 'PSP.Inventory.SystemInfo')
                 $General
@@ -92,7 +92,7 @@ function Get-SysInfo {
                         BIOSName                  = $BIOS.Name
                         BIOSSerialNumber          = $BIOS.SerialNumber
                         BIOSVersion               = $BIOS.SMBIOSBIOSVersion
-                        InventoryDate             = $Date
+                        InventoryDate             = $InventoryDate
                     }
                     $General.PSTypeNames.Insert(0, 'PSP.Inventory.SystemInfo')
                     $General 
