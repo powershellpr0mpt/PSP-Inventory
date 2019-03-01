@@ -32,36 +32,37 @@ Function Get-Software {
     #>
 
     [OutputType('PSP.Inventory.Software')]
-    [Cmdletbinding()] 
-    Param( 
-        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
+    [Cmdletbinding()]
+    Param(
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullorEmpty()]
         [String[]]$ComputerName = $env:COMPUTERNAME
-    )         
+    )
     Begin {
         $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }
-    Process {     
+    Process {
         foreach ($Computer in $Computername) {
             $Computer = $Computer.ToUpper()
             if (Test-Connection -ComputerName $Computer -Count 1 -Quiet) {
-                $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
-                foreach ($Path in $Paths) { 
+                $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")
+                foreach ($Path in $Paths) {
                     Write-Verbose "Checking Path: $Path"
-                    try { 
+                    try {
                         $reg = [Microsoft.Win32.RegistryKey]::OpenRemoteBaseKey('LocalMachine', $Computer, 'Registry64')
                     }
-                    catch { 
-                        Write-Error $_ 
-                        Continue 
-                    } 
+                    catch {
+                        Write-Error $_
+                        Continue
+                    }
                     try {
-                        $regkey = $reg.OpenSubKey($Path)  
-                        $subkeys = $regkey.GetSubKeyNames()      
-                        foreach ($key in $subkeys) {   
+                        $regkey = $reg.OpenSubKey($Path)
+                        $subkeys = $regkey.GetSubKeyNames()
+                        foreach ($key in $subkeys) {
                             Write-Verbose "Key: $Key"
-                            $thisKey = $Path + "\\" + $key 
-                            try {  
-                                $thisSubKey = $reg.OpenSubKey($thisKey)   
+                            $thisKey = $Path + "\\" + $key
+                            try {
+                                $thisSubKey = $reg.OpenSubKey($thisKey)
                                 $DisplayName = $thisSubKey.getValue("DisplayName")
                                 if ($DisplayName -AND $DisplayName -notmatch '^Update for|rollup|^Security Update|^Service Pack|^HotFix') {
                                     $Date = $thisSubKey.GetValue('InstallDate')
@@ -73,41 +74,41 @@ Function Get-Software {
                                             Write-Warning "$($Computer): $_ <$($Date)>"
                                             $Date = $Null
                                         }
-                                    } 
+                                    }
                                     $Publisher = try {
                                         $thisSubKey.GetValue('Publisher').Trim()
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('Publisher')
                                     }
                                     $Version = try {
                                         #Some weirdness with trailing [char]0 on some strings
                                         $thisSubKey.GetValue('DisplayVersion').TrimEnd(([char[]](32, 0)))
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('DisplayVersion')
                                     }
                                     $UninstallString = try {
                                         $thisSubKey.GetValue('UninstallString').Trim()
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('UninstallString')
                                     }
                                     $InstallLocation = try {
                                         $thisSubKey.GetValue('InstallLocation').Trim()
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('InstallLocation')
                                     }
                                     $InstallSource = try {
                                         $thisSubKey.GetValue('InstallSource').Trim()
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('InstallSource')
                                     }
                                     $HelpLink = try {
                                         $thisSubKey.GetValue('HelpLink').Trim()
-                                    } 
+                                    }
                                     catch {
                                         $thisSubKey.GetValue('HelpLink')
                                     }
@@ -130,16 +131,16 @@ Function Get-Software {
                             }
                             catch {
                                 Write-Warning "$Key : $_"
-                            }   
+                            }
                         }
                     }
-                    catch {}   
-                    $reg.Close() 
-                }                  
+                    catch {}
+                    $reg.Close()
+                }
             }
             else {
                 Write-Error "$($Computer): unable to reach remote system!"
             }
-        } 
-    } 
-} 
+        }
+    }
+}

@@ -9,6 +9,8 @@ $VersionFolder = "$BuildFolder\$ModuleVersion\$ModuleName"
 $ModuleManifestName = "$ModuleName.psd1"
 $ModulePath = "$VersionFolder\$ModuleManifestName"
 
+Get-Module $ModuleName | Remove-Module
+
 Import-Module $ModulePath -Force
 
 Describe 'Module Manifest Test' {

@@ -32,15 +32,16 @@ function Get-SysInfo {
     #>
 
     [OutputType('PSP.Inventory.SystemInfo')]
-    [Cmdletbinding()] 
-    param( 
-        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)] 
+    [Cmdletbinding()]
+    param(
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullorEmpty()]
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
         $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
-    }   
-    process {           
+    }
+    process {
         foreach ($Computer in $ComputerName) {
             $Computer = $Computer.ToUpper()
             try {
@@ -74,7 +75,7 @@ function Get-SysInfo {
                 $CimSession = New-CimSession -ComputerName $Computer -SessionOption $CimOptions
                 try {
                     $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -ErrorAction Stop
-                    $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure 
+                    $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure
                     $BIOS = Get-CimInstance -CimSession $CimSession -ClassName Win32_Bios
                     $General = [PSCustomObject]@{
                         ComputerName              = $Computer
@@ -95,7 +96,7 @@ function Get-SysInfo {
                         InventoryDate             = $InventoryDate
                     }
                     $General.PSTypeNames.Insert(0, 'PSP.Inventory.SystemInfo')
-                    $General 
+                    $General
                 }
                 catch {
                     Write-Warning "Unable to get WMI properties for computer '$Computer'"
