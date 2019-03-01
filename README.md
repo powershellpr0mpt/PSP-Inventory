@@ -19,13 +19,16 @@
 
 ### To-Do
 
-- Change cmdlet Get-LocalUser to another Noun so the -AllowClobber parameter is no longer required [this cmdlet already exists on certain OS versions]
 - Add ability to write errors to logfile
 - More instructions on how to use this module alongside the [PoshRSJob](https://github.com/proxb/PoshRSJob) and [ImportExcel](https://github.com/dfinke/ImportExcel) modules.
 The PoshRSJob module will allow parallel collection of data instead of sequential through the use of RunSpaces.
   The ImportExcel module allows you to Export the collected data to Excel and immediately manipulate this data if required, without actually having Excel installed.
   Keep an eye out on this location for more information on how to do this!
 - Add examples on how to use the module [code/GIFs]
+
+### Known Issues
+
+- View the [Issues](https://github.com/powershellpr0mpt/PSP-Inventory/issues) list to see what's up! 
 
 ### Compatibility
 
