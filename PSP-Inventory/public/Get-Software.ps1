@@ -120,7 +120,7 @@ Function Get-Software {
                                         UninstallString = $UninstallString
                                         InstallLocation = $InstallLocation
                                         InstallSource   = $InstallSource
-                                        HelpLink        = $thisSubKey.GetValue('HelpLink')
+                                        HelpLink        = $HelpLink
                                         EstimatedSizeMB = [decimal]([math]::Round(($thisSubKey.GetValue('EstimatedSize') * 1024) / 1MB, 2))
                                         InventoryDate   = $InventoryDate
                                     }
