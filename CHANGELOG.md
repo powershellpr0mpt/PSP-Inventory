@@ -8,12 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
-- ComputerName property always displays in uppercase
+- [Issue #3](https://github.com/powershellpr0mpt/PSP-Inventory/pull/3) - ComputerName property always displays in uppercase
+- Get-RemoteCertificate includes more properties [Subject/HasPrivateKey]
 - Changed Notes and Link URLs to https
 
 ### Fixed
 
-- Issue #5 - Inventory date on Get-SecurityUpdate and Get-Software incorrect
+- [Issue #5](https://github.com/powershellpr0mpt/PSP-Inventory/pull/5) - Inventory date on Get-SecurityUpdate and Get-Software incorrect
 
 ## [0.9.0] - 2019-02-28
 
