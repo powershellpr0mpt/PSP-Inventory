@@ -44,6 +44,7 @@ function Get-DiskInfo {
     {
         foreach ($Computer in $ComputerName)
         {
+            $Computer = $Computer.ToUpper()
             try
             {
                 $Volumes = Get-CimInstance -ClassName Win32_LogicalDisk -Filter "DriveType = 3" -ComputerName $Computer -ErrorAction Stop

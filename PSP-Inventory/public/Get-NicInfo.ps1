@@ -49,6 +49,7 @@ function Get-NicInfo {
     {
         foreach ($Computer in $ComputerName)
         {
+            $Computer = $Computer.ToUpper()
             try
             {
                 $Adapters = Get-CimInstance -ClassName Win32_NetworkAdapter -ComputerName $Computer -Filter "PhysicalAdapter=True" -ErrorAction Stop

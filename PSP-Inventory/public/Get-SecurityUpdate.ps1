@@ -42,7 +42,8 @@ Function Get-SecurityUpdate {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
-        foreach ($Computer in $ComputerName) { 
+        foreach ($Computer in $ComputerName) {
+            $Computer = $Computer.ToUpper()
             $Paths = @("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall", "SOFTWARE\\Wow6432node\\Microsoft\\Windows\\CurrentVersion\\Uninstall")         
             foreach ($Path in $Paths) { 
                 try { 

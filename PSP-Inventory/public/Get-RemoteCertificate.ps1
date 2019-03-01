@@ -53,6 +53,7 @@ Function Get-RemoteCertificate {
     }
     process {
         foreach ($Computer in  $ComputerName) {
+            $Computer = $Computer.ToUpper()
             try {
                 Write-Verbose  ("Connecting to {0}\{1}" -f "\\$($Computer)\$($StoreName)", $StoreLocation)
                 $CertStore = New-Object  System.Security.Cryptography.X509Certificates.X509Store  -ArgumentList "\\$($Computer)\$($StoreName)", $StoreLocation

@@ -40,7 +40,8 @@ function Get-OSInfo {
         $Date = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
     }   
     process {           
-        foreach ($Computer in $ComputerName) { 
+        foreach ($Computer in $ComputerName) {
+            $Computer = $Computer.ToUpper()
             try {
                 $TimeZone = Get-CimInstance -ClassName Win32_TimeZone -ComputerName $Computer -ErrorAction Stop
                 $OS = Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $Computer 

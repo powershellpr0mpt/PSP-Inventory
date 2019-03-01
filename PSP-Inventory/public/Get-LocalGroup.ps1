@@ -47,6 +47,7 @@ Function Get-LocalGroup {
     }
     process {
         foreach ($Computer in $ComputerName) {
+            $Computer = $Computer.ToUpper()
             $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
             foreach ($Group in $GroupInfo) {
                 $Grp = [PSCustomObject]@{
