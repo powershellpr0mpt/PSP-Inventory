@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.9.2] - 2019-03-05
+
+### Changed
+
+- [Issue #8](https://github.com/powershellpr0mpt/PSP-Inventory/issues/8) - No longer exports private functions
+- [Issue #9](https://github.com/powershellpr0mpt/PSP-Inventory/issues/9) - InventoryDate property is now a proper [datetime] object
+
+
+### Fixed
+
+- [Issue #17](https://github.com/powershellpr0mpt/PSP-Inventory/issues/17) - Various cmdlets now include custom display formats
+- [Issue #18](https://github.com/powershellpr0mpt/PSP-Inventory/issues/18) - The WinZIP build task now creates an archive as expected when all tests are successful. Getting the tests to run successful is still an issue though, see [Issue #7](https://github.com/powershellpr0mpt/PSP-Inventory/issues/7)
+
 ## [0.9.1] - 2019-03-01
 
 ### Changed
