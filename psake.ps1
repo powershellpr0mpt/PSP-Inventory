@@ -41,14 +41,16 @@ Task Build {
     }
 
     Write-Host "Copying Module Manifest"  -ForegroundColor Blue
-    $Null = Copy-Item   -Path "$ProjectRoot\$ModuleName\" -Recurse -Destination $VersionFolder -Force
+    $Null = Copy-Item -Path "$ProjectRoot\$ModuleName\" -Recurse -Destination $VersionFolder -Force
 
     Write-Host "Update the PSD1 FunctionsToExport for autoloading on build folder"  -ForegroundColor Blue
     Set-ModuleFunctions -Name "$VersionFolder\$ModuleName"
 
+    Write-Host "Update the PSD1 FormatsToExport for applying custom formats on cmdlets" -ForegroundColor Blue
+    Set-ModuleFormats -Name "$VersionFolder\$ModuleName" -FormatsRelativePath '.\formats'
+
     Write-Host "Module built, verifying module output" -ForegroundColor Blue
-    Get-Module -ListAvailable "$VersionFolder\$ModuleName\$ModuleName.psd1" `
-        | ForEach-Object -Process {
+    Get-Module -ListAvailable "$VersionFolder\$ModuleName\$ModuleName.psd1" | ForEach-Object -Process {
         $ExportedFunctions = $_ `
             | Select-Object -Property @{ Name = "ExportedFunctions" ; Expression = { [string[]]$_.ExportedFunctions.Keys } } `
             | Select-Object -ExpandProperty ExportedFunctions
@@ -95,5 +97,5 @@ Task Test -Depends Analyze {
 
 Task WinZip -depends Test {
     $FileName = "$ZipFolder\$ModuleName.$ModuleVersion.zip"
-    Compress-Archive -Path "$ProjectRoot\$ModuleName" -DestinationPath $FileName -Force
+    Compress-Archive -Path "$VersionFolder\$ModuleName\" -DestinationPath $FileName -Force
 }
