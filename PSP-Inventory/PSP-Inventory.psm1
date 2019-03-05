@@ -6,7 +6,7 @@
 
         Name: PSP-Inventory
         Author: Robert Prust
-        Version: 0.9.1
+        Version: 0.9.2
         Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -19,26 +19,23 @@ param()
 Write-Verbose $PSScriptRoot
 
 Write-Verbose 'Import Private Functions'
-
-if (Test-Path "$PSScriptRoot\Private") {
-    $FunctionList = Get-ChildItem -Path "$PSScriptRoot\Private";
-
-    foreach ($File in $FunctionList) {
-        . $File.FullName;
-        Write-Verbose -Message ('Importing private function file: {0}' -f $File.FullName);
-    }
-}
+$Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
 Write-Verbose 'Import Public Functions'
+$Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
 
-if (Test-Path "$PSScriptRoot\Public") {
-    $FunctionList = Get-ChildItem -Path "$PSScriptRoot\Public";
-
-    foreach ($File in $FunctionList) {
-        . $File.FullName;
-        Write-Verbose -Message ('Importing public function file: {0}' -f $File.FullName);
+#Dot source the files
+Foreach($Function in @($Public + $Private))
+{
+    Try
+    {
+        . $Function.FullName
+    }
+    Catch
+    {
+        Write-Error -Message "Failed to import function $($Function.FullName): $_"
     }
 }
 
-### Export all functions
-Export-ModuleMember -Function *;
+### Export Public functions
+Export-ModuleMember -Function $Public.Basename
