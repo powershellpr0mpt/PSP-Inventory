@@ -24,7 +24,7 @@ Function Get-Software {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 21-02-2019
-    DateModified: 01-03-2019
+    DateModified: 05-03-2019
     Blog: http://powershellpr0mpt.com
 
     .LINK
@@ -39,7 +39,7 @@ Function Get-Software {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     Begin {
-        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        [datetime]$InventoryDate = Get-Date
     }
     Process {
         foreach ($Computer in $Computername) {

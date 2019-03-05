@@ -23,7 +23,7 @@ Function Get-LocalGroup {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 20-02-2019
-    DateModified: 01-03-2019
+    DateModified: 05-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -44,7 +44,7 @@ Function Get-LocalGroup {
             0x8        = 'Universal Group'
             2147483648 = 'Security Enabled'
         }
-        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        [datetime]$InventoryDate = Get-Date
     }
     process {
         foreach ($Computer in $ComputerName) {
