@@ -1,0 +1,1054 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-DiskInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>DiskInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Disk information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Disk information for local or remote machines. Will query Disks, partitions and volumes to obtain as much information as possible.
+Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-DiskInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Disk</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-DiskInfo.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 22-12-2018
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-DiskInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the Disk information for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-DiskInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-LocalGroup</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>LocalGroup</command:noun>
+      <maml:description>
+        <maml:para>Get all local groups for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all local groups for local or remote machines.
+Provides extra information such as members</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-LocalGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.LocalGroup</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-LocalGroup.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 20-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-LocalGroup -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the local groups for both CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-LocalGroup.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-LocalUser</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>LocalUser</command:noun>
+      <maml:description>
+        <maml:para>Get all local users for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all local users for local or remote machines.
+Provides extra information about the actual user based on the user's settings</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-LocalUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.LocalUser</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-LocalUser.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 20-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-LocalUser -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the local users for both CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-LocalUser.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-NicInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>NicInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Network adapter information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Network adapter information for local or remote machines.
+Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-NicInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Drivers</maml:name>
+          <maml:Description>
+            <maml:para>Switch parameter.
+If activated will try and obtain the driver information for the adapter.
+Do note that this will substantially increase time required</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Drivers</maml:name>
+        <maml:Description>
+          <maml:para>Switch parameter.
+If activated will try and obtain the driver information for the adapter.
+Do note that this will substantially increase time required</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.NIC</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-NicInfo.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 20-12-2018
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-NicInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the "basic" NIC information for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-NicInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-OSInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>OSInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Operating System information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Operating System information for local or remote machines.
+Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-OSInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.OperatingSystemInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-OSInfo.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 20-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-OSInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the Operating System information for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-OSInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-RemoteCertificate</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>RemoteCertificate</command:noun>
+      <maml:description>
+        <maml:para>Get certification information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get certification information for local or remote machines.
+Allows you to specify exactly which store you want to query.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-RemoteCertificate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>StoreName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the StoreName to query.
+Default value is the 'My' name</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">AddressBook</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">AuthRoot</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">CertificateAuthority</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Disallowed</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">My</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Root</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPeople</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPublisher</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreName</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreName</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>My</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>StoreLocation</maml:name>
+          <maml:Description>
+            <maml:para>Provide the Certification store to query.
+Default value is the 'LocalMachine' store</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">CurrentUser</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">LocalMachine</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreLocation</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreLocation</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>LocalMachine</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>StoreName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the StoreName to query.
+Default value is the 'My' name</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">StoreName</command:parameterValue>
+        <dev:type>
+          <maml:name>StoreName</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>My</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>StoreLocation</maml:name>
+        <maml:Description>
+          <maml:para>Provide the Certification store to query.
+Default value is the 'LocalMachine' store</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">StoreLocation</command:parameterValue>
+        <dev:type>
+          <maml:name>StoreLocation</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>LocalMachine</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Certificate</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-RemoteCertificate.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 22-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-LocalUser -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the certification information for both CONTOSO-SRV01 and CONTOSO-WEB01, both using the 'My' storename and 'LocalMachine' storelocation</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-RemoteCertificate.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-RemoteScheduledTask</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>RemoteScheduledTask</command:noun>
+      <maml:description>
+        <maml:para>Get Scheduled task information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Scheduled task information for local or remote machines.
+Will get all scheduled tasks in the root folder</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-RemoteScheduledTask</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.ScheduledTask</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-RemoteScheduledTask.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 23-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-RemoteScheduledTask -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the Scheduled Tasks for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-RemoteScheduledTask.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SecurityUpdate</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SecurityUpdate</command:noun>
+      <maml:description>
+        <maml:para>Get all the security update information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all the security update information for local or remote machines.
+Requires the RemoteRegistry to be enabled on the machine.
+Will look for 'Update','Rollup','Security Update','Service Pack' and 'HotFix'</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SecurityUpdate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.SecurityUpdate</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-SecurityUpdate.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 21-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SecurityUpdate -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the security update information for both CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-SecurityUpdate.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-ServerRole</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>ServerRole</command:noun>
+      <maml:description>
+        <maml:para>Get Server Roles for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Server Roles for local or remote machines.
+Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-ServerRole</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.ServerRole</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-ServerRole.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 22-12-2018
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-ServerRole -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the Server Role information for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-ServerRole.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-Software</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>Software</command:noun>
+      <maml:description>
+        <maml:para>Get the installed software for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get the installed software for local or remote machines.
+Requires the RemoteRegistry to be enabled on the machine.
+Will look for both x86 and x64 installed paths.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-Software</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Software</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-Software.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 21-02-2019
+DateModified: 05-03-2019
+Blog: http://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SecurityUpdate -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the software information for both CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-Software.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>http://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>http://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-SysInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>SysInfo</command:noun>
+      <maml:description>
+        <maml:para>Get System information for local or remote machines</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get System information for local or remote machines.
+Will query default information about the actual system, such as CPU &amp; Memory and if it's virtual or physical.
+Tries to use CIM to obtain information, but will revert to DCOM if CIM is not available</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SysInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="none">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query.
+Default value is the local machine</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.SystemInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-SysInfo.ps1
+Author: Robert Prüst
+Module: PSP-Inventory
+DateCreated: 24-02-2019
+DateModified: 05-03-2019
+Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-SysInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'</dev:code>
+        <dev:remarks>
+          <maml:para>Description --- --- Gets the System information for CONTOSO-SRV01 and CONTOSO-WEB01</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-SysInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+</helpItems>
