@@ -1,9 +1,22 @@
 # PSP-Inventory
 
+## What does it do
+
+The PSP-Inventory module provides new cmdlets for you to inventorise your Windows environment.
+It currently provides ways to get information about systems, operating system settings, disks, network, local users/groups, certificates, software, updates and scheduled tasks.
+
+The module has been created with a mindset to be able to quickly make an inventory of a new environment, providing default information required to get to know new systems.
+Seeing that I tend to work on a project basis a lot for different companies, getting inventory data really helps me with quickly evaluating the systems I need to work on.
+It might also simply help me with keeping track of changes made on a system over time by re-running cmdlets and comparing the data collected.
+
 ## Installing PSP-Inventory
 
-    # Install PSP-Inventory from the Powershell Gallery
-    Find-Module PSP-Inventory | Install-Module -AllowClobber
+```powershell
+# Install PSP-Inventory from the Powershell Gallery
+Find-Module PSP-Inventory | Install-Module -AllowClobber
+```
+
+The `-AllowClobber` function is currently still required as explained in [issue #1](https://github.com/powershellpr0mpt/PSP-Inventory/issues/1)
 
 ### Change Log
 
@@ -17,18 +30,45 @@
 
 [License can be seen here](LICENSE.md)
 
-### To-Do
-
-- Add ability to write errors to logfile
-- More instructions on how to use this module alongside the [PoshRSJob](https://github.com/proxb/PoshRSJob) and [ImportExcel](https://github.com/dfinke/ImportExcel) modules.
-The PoshRSJob module will allow parallel collection of data instead of sequential through the use of RunSpaces.
-  The ImportExcel module allows you to Export the collected data to Excel and immediately manipulate this data if required, without actually having Excel installed.
-  Keep an eye out on this location for more information on how to do this!
-- Add examples on how to use the module [code/GIFs]
-
 ### Known Issues
 
-- View the [Issues](https://github.com/powershellpr0mpt/PSP-Inventory/issues) list to see what's up! 
+- View the [Issues](https://github.com/powershellpr0mpt/PSP-Inventory/issues) list to see what's currently known.
+
+### Examples
+
+Here's a few simple examples on how to use the module for basic inventory needs.
+Do note that as stated in [issue #2](https://github.com/powershellpr0mpt/PSP-Inventory/issues/2) I'm looking to create external help, which will provide information on each cmdlet for easy viewing.
+All cmdlets currently already provide comment based help available within PowerShell itself.
+
+#### Getting Network information
+
+```powershell
+#Collect the list of computers to query
+$Computers = Get-Content 'C:\Temp\Computers.txt'
+Get-NicInfo -ComputerName $Computers -Drivers | Format-Table
+
+ComputerName Alias    Index PhysicalAdapter IPAddress                                 Status    MacAddress        DHCPEnabled DHCPServer DNSServers
+------------ -----    ----- --------------- ---------                                 ------    ----------        ----------- ---------- ----------
+DC2012R2     Ethernet 10               True {192.168.14.3, fe80::e456:f730:f610:7eac} Connected 00:17:FB:00:00:00       False            {127.0.0.1}
+SRV2012      Ethernet 10               True {192.168.14.5, fe80::2d7c:d6b8:d670:38df} Connected 00:17:FB:00:00:02       False            {192.168.14.3}
+SRV2016CORE  Ethernet 1                True {192.168.14.6, fe80::a438:7d49:4f12:b000} Connected 00:17:FB:00:00:03       False            {192.168.14.3}
+SRV2019CORE  Ethernet 1                True {192.168.14.7, fe80::31f3:d92a:a4b9:e3a8} Connected 00:17:FB:00:00:04       False            {192.168.14.3}
+```
+
+#### Finding installed software and export it to Excel
+
+This depends on the availability of the [ImportExcel](https://github.com/dfinke/ImportExcel) module on your system
+
+```powershell
+$Software = Get-Software -ComputerName NYC-DC01
+
+$Software | Export-Excel -Path "$Home\Inventory\Inventory.xlsx" -WorksheetName 'Software' -Append -AutoSize -AutoFilter -FreezeTopRowFirstColumn
+```
+
+This will provide you an Excel sheet work a worksheet named Software containing all the collected data.
+It will be automatically sized, filtered and the top row and first column will be frozen.
+
+If there's already data in this Excel sheet, it will automatically append the data to it instead of overwriting it.
 
 ### Compatibility
 
