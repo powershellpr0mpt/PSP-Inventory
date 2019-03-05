@@ -24,7 +24,7 @@ function Get-DiskInfo {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 22-12-2018
-    DateModified: 01-03-2019
+    DateModified: 05-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -39,7 +39,7 @@ function Get-DiskInfo {
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        [datetime]$InventoryDate = Get-Date
     }
     process {
         foreach ($Computer in $ComputerName) {

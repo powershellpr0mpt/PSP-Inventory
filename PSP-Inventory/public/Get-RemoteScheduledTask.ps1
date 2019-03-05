@@ -23,7 +23,7 @@ Function Get-RemoteScheduledTask {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 23-02-2019
-    DateModified: 01-03-2019
+    DateModified: 05-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -39,7 +39,7 @@ Function Get-RemoteScheduledTask {
     )
     begin {
         $ST = New-Object -ComObject Schedule.Service
-        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        [datetime]$InventoryDate = Get-Date
     }
     process {
         foreach ($Computer in $ComputerName) {

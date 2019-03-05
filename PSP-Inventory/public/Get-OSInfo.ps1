@@ -23,7 +23,7 @@ function Get-OSInfo {
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 20-02-2019
-    DateModified: 01-03-2019
+    DateModified: 05-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -38,7 +38,7 @@ function Get-OSInfo {
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
-        $InventoryDate = Get-Date -f 'dd-MM-yyyy HH:mm:ss'
+        [datetime]$InventoryDate = Get-Date
     }
     process {
         foreach ($Computer in $ComputerName) {
