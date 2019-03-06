@@ -9,6 +9,10 @@ The module has been created with a mindset to be able to quickly make an invento
 Seeing that I tend to work on a project basis a lot for different companies, getting inventory data really helps me with quickly evaluating the systems I need to work on.
 It might also simply help me with keeping track of changes made on a system over time by re-running cmdlets and comparing the data collected.
 
+[!alt text](https://powershellpr0mpt.com/wp-content/uploads/2019/03/PSP-Inventory_1.png "Quickly collect all information required")
+
+[!alt text](https://powershellpr0mpt.com/wp-content/uploads/2019/03/PSP-Inventory_2.png "Objects are formatted for an easy on the eye display, but contain every bit of info you might require")
+
 ## Installing PSP-Inventory
 
 ```powershell
