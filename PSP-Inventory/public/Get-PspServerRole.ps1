@@ -1,5 +1,5 @@
-function Get-PspSysInfo {
-    [OutputType('PSP.Inventory.SystemInfo')]
+function Get-PspDiskInfo {
+    [OutputType('PSP.Inventory.ServerRole')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
@@ -52,7 +52,7 @@ function Get-PspSysInfo {
             }
         }
         foreach ($Session in $CimSession) {
-            _GetSysInfo -Cimsession $Session
+            _GetRoleInfo -Cimsession $Session
         }
     }
     End {

@@ -1,5 +1,5 @@
-function Get-PspSysInfo {
-    [OutputType('PSP.Inventory.SystemInfo')]
+function Get-PspNicInfo {
+    [OutputType('PSP.Inventory.NIC')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
@@ -8,7 +8,8 @@ function Get-PspSysInfo {
         [Parameter(ParameterSetName = 'Computer')]
         [PSCredential]$Credential,
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
-        [Microsoft.Management.Infrastructure.CimSession[]]$CimSession
+        [Microsoft.Management.Infrastructure.CimSession[]]$CimSession,
+        [Switch]$Drivers
     )
     begin {
     }
@@ -52,7 +53,14 @@ function Get-PspSysInfo {
             }
         }
         foreach ($Session in $CimSession) {
-            _GetSysInfo -Cimsession $Session
+            $NicProperties = @{
+                CimSession = $Session
+                Drivers    = $false
+            }
+            if ($Drivers) {
+                $NicProperties.Drivers = $true
+            }
+            _GetNicInfo @NicProperties
         }
     }
     End {

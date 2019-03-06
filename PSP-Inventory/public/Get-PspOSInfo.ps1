@@ -1,5 +1,4 @@
 function Get-PspOSInfo {
-
     [OutputType('PSP.Inventory.OperatingSystemInfo')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(

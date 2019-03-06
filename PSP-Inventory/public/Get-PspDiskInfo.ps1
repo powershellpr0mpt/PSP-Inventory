@@ -1,5 +1,4 @@
 function Get-PspDiskInfo {
-
     [OutputType('PSP.Inventory.Disk')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
