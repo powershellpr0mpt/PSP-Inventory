@@ -2,12 +2,24 @@
 
 ## What does it do
 
-The PSP-Inventory module provides new cmdlets for you to inventorise your Windows environment.
-It currently provides ways to get information about systems, operating system settings, disks, network, local users/groups, certificates, software, updates and scheduled tasks.
+The PSP-Inventory module provides new cmdlets for you to inventorise your Windows environment.  
+The following items are collected for you:
+
+- System Info [CPU/Mem etc]
+- Operating System Info
+- Disk Info
+- Network Info
+- Installed Software
+- Installed Security Updates
+- Installed Server Roles
+- Installed Certificates
+- Scheduled Tasks
+- Local Groups
+- Local Users
 
 The module has been created with a mindset to be able to quickly make an inventory of a new environment, providing default information required to get to know new systems.
 Seeing that I tend to work on a project basis a lot for different companies, getting inventory data really helps me with quickly evaluating the systems I need to work on.
-It might also simply help me with keeping track of changes made on a system over time by re-running cmdlets and comparing the data collected.
+It might also simply help with keeping track of changes made on a system over time by re-running cmdlets and comparing the data collected.
 
 ![alt text](https://powershellpr0mpt.com/wp-content/uploads/2019/03/PSP-Inventory_1.png "Quickly collect all information required")
 
