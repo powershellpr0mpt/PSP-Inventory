@@ -9,7 +9,7 @@ function _GetOSInfo {
     $ProductKey = (Get-CimInstance -CimSession $CimSession -Query 'SELECT OA3xOriginalProductKey FROM SoftwareLicensingService').OA3xOriginalProductKey
     $PageFile = Get-CimInstance -CimSession $CimSession -ClassName Win32_PageFile -Property Name, FileSize
     [PSCustomObject]@{
-        PSTypename = 'PSP.Inventory.OperatingSystemInfo'
+        PSTypename     = 'PSP.Inventory.OperatingSystemInfo'
         ComputerName   = $Cimsession.ComputerName
         Caption        = $OS.Caption
         Version        = $OS.Version
