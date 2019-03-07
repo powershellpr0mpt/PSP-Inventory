@@ -1,5 +1,5 @@
-function Get-PspOSInfo {
-    [OutputType('PSP.Inventory.OperatingSystemInfo')]
+function Get-PspDiskInfo {
+    [OutputType('PSP.Inventory.Disk')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
@@ -52,7 +52,7 @@ function Get-PspOSInfo {
             }
         }
         foreach ($Session in $CimSession) {
-            _GetOSInfo -Cimsession $Session
+            _GetDiskInfo -Cimsession $Session
         }
     }
     End {
