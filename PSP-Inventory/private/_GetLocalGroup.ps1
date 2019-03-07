@@ -14,7 +14,7 @@ function _GetLocalGroup {
             Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
             GroupType     = $GroupType[[int]$Group.GroupType[0]]
             SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
-            InventoryDate = $InventoryDate
+            InventoryDate = (Get-Date)
         }
     }   
 }
