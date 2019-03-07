@@ -1,5 +1,4 @@
-Function Get-LocalGroupMember
-{
+Function _GetLocalGroupMember {
     <#
     .SYNOPSIS
     Gets the members of a local group
@@ -11,18 +10,18 @@ Function Get-LocalGroupMember
     Provide the local group name to query for its members
 
     .EXAMPLE
-    Get-LocalGroupMember -Group Administrators
+    _GetLocalGroupMember -Group Administrators
 
     Description
     -----------
     Gets all the members of the local group 'Administrators'
 
     .NOTES
-    Name: Get-LocalGroupMember.ps1
+    Name: _GetLocalGroupMember.ps1
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 20-02-2019
-    DateModified: 27-02-2019
+    DateModified: 07-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK

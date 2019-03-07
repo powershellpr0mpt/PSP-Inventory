@@ -1,4 +1,4 @@
-function _GetNicInfo {
+    function _GetNicInfo {
     [cmdletbinding()]
     Param(
         [Microsoft.Management.Infrastructure.CimSession]$Cimsession,
