@@ -37,25 +37,21 @@ Function Get-LocalUser {
         [ValidateNotNullorEmpty()]
         [String[]]$ComputerName = $env:COMPUTERNAME
     )
-    begin {
-        [datetime]$InventoryDate = Get-Date
-    }
     process {
         foreach ($Computer in $Computername) {
             $Computer = $Computer.ToUpper()
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
             foreach ($User in $UserInfo) {
-                $Usr = [PSCustomObject]@{
+                [PSCustomObject]@{
+                    PSTypeName    = 'PSP.Inventory.LocalUser'
                     ComputerName  = $Computer
                     UserName      = $User.Name[0]
                     Description   = $User.Description[0]
                     LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
                     SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
                     UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
-                    InventoryDate = $InventoryDate
+                    InventoryDate = (Get-Date)
                 }
-                $Usr.PSTypeNames.Insert(0, 'PSP.Inventory.LocalUser')
-                $Usr
             }
         }
     }
