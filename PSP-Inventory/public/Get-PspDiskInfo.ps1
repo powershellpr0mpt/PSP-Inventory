@@ -6,10 +6,12 @@ function Get-PspDiskInfo {
     .DESCRIPTION
     Get Disk information for local or remote machines.
     Will query Disks, partitions and volumes to obtain as much information as possible.
-    Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available
+    Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available.
+    If there's already a CIM session available, this can also be used to obtain the data.
 
     .PARAMETER ComputerName
     Provide the computername(s) to query.
+    This will create a new CIM session which will be removed once the information has been gathered.
     Default value is the local machine.
 
     .PARAMETER Credential
@@ -17,9 +19,30 @@ function Get-PspDiskInfo {
 
     .PARAMETER CimSession
     Provide the CIM session object to query if this is already available.
+    Once the information has been gathered, the CIM session will remain available for further use.
 
     .EXAMPLE
-    An example
+    PS C:\> Get-PspDiskInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+
+    ComputerName DriveLetter FileSystem TotalSizeGB FreeSizeGB UsedSizeGB
+    ------------ ----------- ---------- ----------- ---------- ----------
+    CONTOSO-SRV01  C:          NTFS       50          38.81      11.19
+    CONTOSO-WEB01  C:          NTFS       49.36       41.81      7.55
+
+    Gets the disk information for CONTOSO-SRV01 and CONTOSO-WEB01 by creating a temporary CIM session
+
+    .EXAMPLE
+    PS C:\> $CimSession = New-CimSession -ComputerName 'CONTOSO-SRV02'
+    PS C:\> Get-PspDiskInfo -CimSession $CimSession
+
+    ComputerName DriveLetter FileSystem TotalSizeGB FreeSizeGB UsedSizeGB
+    ------------ ----------- ---------- ----------- ---------- ----------
+    CONTOSO-SRV02  C:          NTFS       50          38.81      11.19
+
+    Creates a CIM session for CONTOSO-SRV02 and uses this session to get the Disk information from this machine.
+    The session can then be re-used for other cmdlets in order to get more information.
+    Re-using the session provides performance benefits.
+
 
     .NOTES
     Name: Get-PspDiskInfo.ps1
