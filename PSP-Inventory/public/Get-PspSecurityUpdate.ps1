@@ -1,5 +1,5 @@
-function Get-PspOSInfo {
-    [OutputType('PSP.Inventory.OperatingSystemInfo')]
+function Get-PspSecurityUpdate {
+    [OutputType('PSP.Inventory.SecurityUpdate')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
@@ -46,7 +46,7 @@ function Get-PspOSInfo {
             }
         }
         foreach ($Session in $CimSession) {
-            _GetOSInfo -Cimsession $Session
+            _GetUpdateInfo -Cimsession $Session
         }
     }
     End {

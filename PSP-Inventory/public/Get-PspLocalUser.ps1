@@ -10,8 +10,6 @@ Function Get-PspLocalUser {
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
         [System.Management.Automation.Runspaces.PSSession[]]$PSSession
     )
-    begin {
-    }
     process {
         if ($PSCmdlet.ParameterSetName -eq 'Computer') {
             foreach ($Computer in $ComputerName) {

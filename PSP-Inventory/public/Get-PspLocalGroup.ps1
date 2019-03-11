@@ -20,14 +20,11 @@ Function Get-PspLocalGroup {
     }
     process {
         if ($PSCmdlet.ParameterSetName -eq 'Computer') {
-            #initialize an array to hold sessions
             $PSSession = @()
-            #define a hashtable of parametes to splat to New-Cimsession
             $SessionProperties = @{
                 ErrorAction  = 'Stop'
                 Computername = ''
             }
-
             if ($Credential.Username) {
                 $SessionProperties.Add('Credential', $Credential)
             }
@@ -43,7 +40,7 @@ Function Get-PspLocalGroup {
                         $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
                         foreach ($Group in $GroupInfo) {
                             [PSCustomObject]@{
-                                PSTypeName = 'PSP.Inventory.LocalGroup'
+                                PSTypeName    = 'PSP.Inventory.LocalGroup'
                                 ComputerName  = $Computer
                                 GroupName     = $Group.Name[0]
                                 Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
@@ -51,7 +48,7 @@ Function Get-PspLocalGroup {
                                 SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
                                 InventoryDate = $InventoryDate
                             }
-                        }            
+                        }
                     }
                     catch {
                         Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
@@ -67,7 +64,6 @@ Function Get-PspLocalGroup {
         }
     }
     End {
-        #remove cim sessions created for computers
         if ($PSCmdlet.ParameterSetName -eq 'Computer' -AND $PSSession.count -gt 0) {
             Remove-PSSession $PSSession
         }

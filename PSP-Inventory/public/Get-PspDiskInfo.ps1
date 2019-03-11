@@ -1,4 +1,38 @@
 function Get-PspDiskInfo {
+    <#
+    .SYNOPSIS
+    Get Disk information for local or remote machines
+
+    .DESCRIPTION
+    Get Disk information for local or remote machines.
+    Will query Disks, partitions and volumes to obtain as much information as possible.
+    Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available
+
+    .PARAMETER ComputerName
+    Provide the computername(s) to query.
+    Default value is the local machine.
+
+    .PARAMETER Credential
+    Provide the credentials for the CIM session to be created if current credentials are not sufficient.
+
+    .PARAMETER CimSession
+    Provide the CIM session object to query if this is already available.
+
+    .EXAMPLE
+    An example
+
+    .NOTES
+    Name: Get-PspDiskInfo.ps1
+    Author: Robert Prüst
+    Module: PSP-Inventory
+    DateCreated: 22-12-2018
+    DateModified: 11-03-2019
+    Blog: https://powershellpr0mpt.com
+
+    .LINK
+    https://powershellpr0mpt.com
+    #>
+
     [OutputType('PSP.Inventory.Disk')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
@@ -10,18 +44,13 @@ function Get-PspDiskInfo {
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
         [Microsoft.Management.Infrastructure.CimSession[]]$CimSession
     )
-    begin {
-    }
     process {
         if ($PSCmdlet.ParameterSetName -eq 'Computer') {
-            #initialize an array to hold sessions
             $CimSession = @()
-            #define a hashtable of parametes to splat to New-Cimsession
             $CimProperties = @{
                 ErrorAction  = 'Stop'
                 Computername = ''
             }
-
             if ($credential.Username) {
                 $CimProperties.Add('Credential', $Credential)
             }
@@ -42,7 +71,6 @@ function Get-PspDiskInfo {
                         Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
                     }
                     Finally {
-                        #remove CimOptions from PSBoundParameters
                         $CimProperties.Remove('SessionOption') | Out-Null
                     }
                 }
@@ -56,7 +84,6 @@ function Get-PspDiskInfo {
         }
     }
     End {
-        #remove cim sessions created for computers
         if ($PSCmdlet.ParameterSetName -eq 'Computer' -AND $CimSession.count -gt 0) {
             Remove-Cimsession $CimSession
         }

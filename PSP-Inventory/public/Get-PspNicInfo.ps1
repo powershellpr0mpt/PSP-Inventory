@@ -11,18 +11,13 @@ function Get-PspNicInfo {
         [Microsoft.Management.Infrastructure.CimSession[]]$CimSession,
         [Switch]$Drivers
     )
-    begin {
-    }
     process {
         if ($PSCmdlet.ParameterSetName -eq 'Computer') {
-            #initialize an array to hold sessions
             $CimSession = @()
-            #define a hashtable of parametes to splat to New-Cimsession
             $CimProperties = @{
                 ErrorAction  = 'Stop'
                 Computername = ''
             }
-
             if ($credential.Username) {
                 $CimProperties.Add('Credential', $Credential)
             }
@@ -43,7 +38,6 @@ function Get-PspNicInfo {
                         Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
                     }
                     Finally {
-                        #remove CimOptions from PSBoundParameters
                         $CimProperties.Remove('SessionOption') | Out-Null
                     }
                 }
@@ -64,7 +58,6 @@ function Get-PspNicInfo {
         }
     }
     End {
-        #remove cim sessions created for computers
         if ($PSCmdlet.ParameterSetName -eq 'Computer' -AND $CimSession.count -gt 0) {
             Remove-Cimsession $CimSession
         }

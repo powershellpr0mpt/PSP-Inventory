@@ -1,4 +1,4 @@
-function Get-PspDiskInfo {
+function Get-PspServerRole {
     [OutputType('PSP.Inventory.ServerRole')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
@@ -10,18 +10,13 @@ function Get-PspDiskInfo {
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
         [Microsoft.Management.Infrastructure.CimSession[]]$CimSession
     )
-    begin {
-    }
     process {
         if ($PSCmdlet.ParameterSetName -eq 'Computer') {
-            #initialize an array to hold sessions
             $CimSession = @()
-            #define a hashtable of parametes to splat to New-Cimsession
             $CimProperties = @{
                 ErrorAction  = 'Stop'
                 Computername = ''
             }
-
             if ($credential.Username) {
                 $CimProperties.Add('Credential', $Credential)
             }
@@ -42,7 +37,6 @@ function Get-PspDiskInfo {
                         Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
                     }
                     Finally {
-                        #remove CimOptions from PSBoundParameters
                         $CimProperties.Remove('SessionOption') | Out-Null
                     }
                 }
@@ -56,7 +50,6 @@ function Get-PspDiskInfo {
         }
     }
     End {
-        #remove cim sessions created for computers
         if ($PSCmdlet.ParameterSetName -eq 'Computer' -AND $CimSession.count -gt 0) {
             Remove-Cimsession $CimSession
         }
