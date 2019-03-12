@@ -1,7 +1,7 @@
 function Get-PspDiskInfo {
     <#
     .SYNOPSIS
-    Get Disk information for local or remote machines
+    Get Disk information for local or remote machines.
 
     .DESCRIPTION
     Get Disk information for local or remote machines.
@@ -29,7 +29,7 @@ function Get-PspDiskInfo {
     CONTOSO-SRV01  C:          NTFS       50          38.81      11.19
     CONTOSO-WEB01  C:          NTFS       49.36       41.81      7.55
 
-    Gets the disk information for CONTOSO-SRV01 and CONTOSO-WEB01 by creating a temporary CIM session
+    Gets the disk information for CONTOSO-SRV01 and CONTOSO-WEB01 by creating a temporary CIM session, displaying the default properties.
 
     .EXAMPLE
     PS C:\> $CimSession = New-CimSession -ComputerName 'CONTOSO-SRV02'
@@ -42,7 +42,6 @@ function Get-PspDiskInfo {
     Creates a CIM session for CONTOSO-SRV02 and uses this session to get the Disk information from this machine.
     The session can then be re-used for other cmdlets in order to get more information.
     Re-using the session provides performance benefits.
-
 
     .NOTES
     Name: Get-PspDiskInfo.ps1
@@ -61,10 +60,12 @@ function Get-PspDiskInfo {
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
         [ValidateNotNullorEmpty()]
+        [Alias('CN')]
         [String[]]$ComputerName = $env:COMPUTERNAME,
         [Parameter(ParameterSetName = 'Computer')]
         [PSCredential]$Credential,
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
+        [Alias('Session')]
         [Microsoft.Management.Infrastructure.CimSession[]]$CimSession
     )
     process {

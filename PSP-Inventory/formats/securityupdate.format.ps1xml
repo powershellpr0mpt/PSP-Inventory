@@ -20,12 +20,12 @@
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>HotFixID</Label>
+            <Label>KBFile</Label>
             <Width>12</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
-            <Label>InstalledOn</Label>
+            <Label>InstallDate</Label>
             <Width>21</Width>
             <Alignment>left</Alignment>
           </TableColumnHeader>
@@ -40,10 +40,10 @@
                 <PropertyName>Type</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>HotFixID</PropertyName>
+                <PropertyName>KBFile</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
-                <PropertyName>InstalledOn</PropertyName>
+                <PropertyName>InstallDate</PropertyName>
               </TableColumnItem>
             </TableColumnItems>
           </TableRowEntry>

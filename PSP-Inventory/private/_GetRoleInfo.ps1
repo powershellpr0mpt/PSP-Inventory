@@ -8,7 +8,7 @@ function _GetRoleInfo {
         [PSCustomObject]@{
             PSTypeName    = 'PSP.Inventory.ServerRole'
             ComputerName  = $Cimsession.ComputerName
-            ID            = $_.Id
+            RoleId        = $_.Id
             Name          = $_.Name
             InventoryDate = (Get-Date)
         }

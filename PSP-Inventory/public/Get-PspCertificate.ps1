@@ -1,7 +1,7 @@
 Function Get-PspCertificate {
     <#
     .SYNOPSIS
-    Get certification information for local or remote machines
+    Get certification information for local or remote machines.
 
     .DESCRIPTION
     Get certification information for local or remote machines.
@@ -12,22 +12,22 @@ Function Get-PspCertificate {
     Using this parameter will create a temporary PSSession to obtain the information if available.
     If PowerShell remoting is not available, it will try and obtain the information through .NET.
     Default value is the local machine.
-    
+
     .PARAMETER Credential
     Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.
 
     .PARAMETER PSSession
     Provide the PowerShell remoting session object to query if this is already available.
     Once the information has been gathered, the PowerShell session will remain available for further use.
-    
+
     .PARAMETER StoreName
     Provide the StoreName to query
     Default value is the 'My' name
 
     .PARAMETER StoreLocation
-    Provide the Certification store to query
-    Default value is the 'LocalMachine' store
-    
+    Provide the Certification store to query.
+    Default value is the 'LocalMachine' store.
+
     .EXAMPLE
     PS C:\> Get-PspCertificate -ComputerName 'CONTOSO-SRV01'
 
@@ -39,11 +39,10 @@ Function Get-PspCertificate {
     CONTOSO-SRV01 3-12-2028 14:02:53  3-12-2018 13:32:53  CN=1d55f591-ad3c-43dd-abef-ff7e3e6a6f51                                          28165F4FDE3E0FAA24...
     CONTOSO-SRV01 3-12-2019 14:02:58  3-12-2018 13:52:58  CN=a8b24bcf-6f4c-4b8c-907e-37acb9b15d3b                                          0F674857164B0D4197...
 
-    Gets the certification information for CONTOSO-SRV01 using the 'My' storename and 'LocalMachine' storelocation
+    Gets the certification information for CONTOSO-SRV01 using the 'My' storename and 'LocalMachine' storelocation, displaying the default properties.
 
-    
     .NOTES
-    Name: Get-RemoteCertificate.ps1
+    Name: Get-PspCertificate.ps1
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 22-02-2019
@@ -53,16 +52,18 @@ Function Get-PspCertificate {
     .LINK
     https://powershellpr0mpt.com
     #>
-    
+
     [OutputType('PSP.Inventory.Certificate')]
     [Cmdletbinding(DefaultParameterSetName = 'Computer')]
     param(
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, ParameterSetName = 'Computer')]
         [ValidateNotNullorEmpty()]
+        [Alias('CN')]
         [String[]]$ComputerName = $env:COMPUTERNAME,
         [Parameter(ParameterSetName = 'Computer')]
         [PSCredential]$Credential,
         [Parameter(Position = 0, ValueFromPipeline = $true, ParameterSetName = 'Session')]
+        [Alias('Session')]
         [System.Management.Automation.Runspaces.PSSession[]]$PSSession,
         [Parameter(Position = 1)]
         [System.Security.Cryptography.X509Certificates.StoreName]$StoreName = 'My',
@@ -80,7 +81,7 @@ Function Get-PspCertificate {
                     $Certificates = $CertStore.Certificates
                     foreach ($Certificate in $Certificates) {
                         [PSCustomObject]@{
-                            PSTypeName = 'PSP.Inventory.Certificate'
+                            PSTypeName    = 'PSP.Inventory.Certificate'
                             ComputerName  = $Computer
                             StoreName     = $StoreName
                             StoreLocation = $StoreLocation
@@ -95,8 +96,9 @@ Function Get-PspCertificate {
                             InventoryDate = (Get-Date)
                         }
                     }
-                } catch {
-                        Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
+                }
+                catch {
+                    Write-Warning "[$Computer] - cannot be reached. $($_.Exception.Message)"
                 }
             }
         }
