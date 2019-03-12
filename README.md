@@ -29,10 +29,14 @@ It might also simply help with keeping track of changes made on a system over ti
 
 ```powershell
 # Install PSP-Inventory from the Powershell Gallery
-Find-Module PSP-Inventory | Install-Module -AllowClobber
+Find-Module PSP-Inventory | Install-Module
 ```
 
-The `-AllowClobber` function is currently still required as explained in [issue #1](https://github.com/powershellpr0mpt/PSP-Inventory/issues/1)
+### BREAKING CHANGES
+
+Do note that due to the release of v1.0.0 there might be breaking changes.
+This solves some of the issues the module was having, but might impact current users of the module.
+Be sure to check the [Change Log](CHANGELOG.md) for exact information on what has been changed.
 
 ### Change Log
 
@@ -52,16 +56,16 @@ The `-AllowClobber` function is currently still required as explained in [issue 
 
 ### Examples
 
-Here's a few simple examples on how to use the module for basic inventory needs.
-Do note that as stated in [issue #2](https://github.com/powershellpr0mpt/PSP-Inventory/issues/2) I'm looking to create external help, which will provide information on each cmdlet for easy viewing.
-All cmdlets currently already provide comment based help available within PowerShell itself.
+Here are a few simple examples on how to use the module for basic inventory needs.
+
+All cmdlets currently already provide comment based help available within PowerShell itself, which can be found [here](https://github.com/powershellpr0mpt/PSP-Inventory/tree/master/PSP-Inventory/docs)
 
 #### Getting Network information
 
 ```powershell
 #Collect the list of computers to query
 $Computers = Get-Content 'C:\Temp\Computers.txt'
-Get-NicInfo -ComputerName $Computers -Drivers | Format-Table
+Get-PspNicInfo -ComputerName $Computers -Drivers | Format-Table
 
 ComputerName Alias    Index PhysicalAdapter IPAddress                                 Status    MacAddress        DHCPEnabled DHCPServer DNSServers
 ------------ -----    ----- --------------- ---------                                 ------    ----------        ----------- ---------- ----------
@@ -76,7 +80,7 @@ SRV2019CORE  Ethernet 1                True {192.168.14.7, fe80::31f3:d92a:a4b9:
 This depends on the availability of the [ImportExcel](https://github.com/dfinke/ImportExcel) module on your system
 
 ```powershell
-$Software = Get-Software -ComputerName NYC-DC01
+$Software = Get-PspSoftware -ComputerName NYC-DC01
 
 $Software | Export-Excel -Path "$Home\Inventory\Inventory.xlsx" -WorksheetName 'Software' -Append -AutoSize -AutoFilter -FreezeTopRowFirstColumn
 ```

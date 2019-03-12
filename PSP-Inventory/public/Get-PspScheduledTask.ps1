@@ -1,29 +1,34 @@
-Function Get-RemoteScheduledTask {
+Function Get-PspScheduledTask {
     <#
     .SYNOPSIS
-    Get Scheduled task information for local or remote machines
+    Get Scheduled task information for local or remote machines.
 
     .DESCRIPTION
     Get Scheduled task information for local or remote machines.
-    Will get all scheduled tasks in the root folder
+    Will get all scheduled tasks in the root folder.
 
     .PARAMETER ComputerName
-    Provide the computername(s) to query
-    Default value is the local machine
+    Provide the computername(s) to query.
+    Default value is the local machine.
 
     .EXAMPLE
-    Get-RemoteScheduledTask -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+    PS C:\> Get-PspScheduledTask -ComputerName CONTOSO-SRV01,CONTOSO-WEB01,CONTOSO-APP01
 
-    Description
-    -----------
-    Gets the Scheduled Tasks for CONTOSO-SRV01 and CONTOSO-WEB01
+    ComputerName    Task                                                                          Enabled State    LastResult
+    ------------    ----                                                                          ------- -----    ----------
+    CONTOSO-SRV01   Optimize Start Menu Cache Files-S-1-5-21-2130384611-3847849876-2318412143-500 False   Disabled Successfully completed
+    CONTOSO-WEB01   notepad                                                                       False   Disabled Successfully completed
+    CONTOSO-APP01   GoogleUpdateTaskMachineCore                                                   True    Ready    Successfully completed
+    CONTOSO-APP01   GoogleUpdateTaskMachineUA                                                     True    Ready    Successfully completed
+
+    Gets the Scheduled Tasks for CONTOSO-SRV01, CONTOSO-WEB01 and CONTOSO-APP01, displaying the default properties.
 
     .NOTES
-    Name: Get-RemoteScheduledTask.ps1
+    Name: Get-PspScheduledTask.ps1
     Author: Robert Prüst
     Module: PSP-Inventory
     DateCreated: 23-02-2019
-    DateModified: 05-03-2019
+    DateModified: 12-03-2019
     Blog: https://powershellpr0mpt.com
 
     .LINK
@@ -35,11 +40,11 @@ Function Get-RemoteScheduledTask {
     param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [ValidateNotNullorEmpty()]
+        [Alias('CN')]
         [string[]]$ComputerName = $env:COMPUTERNAME
     )
     begin {
         $ST = New-Object -ComObject Schedule.Service
-        [datetime]$InventoryDate = Get-Date
     }
     process {
         foreach ($Computer in $ComputerName) {
@@ -49,7 +54,8 @@ Function Get-RemoteScheduledTask {
                 $Root = $ST.GetFolder("\")
                 @($Root.GetTasks(0)) | ForEach-Object {
                     $xml = ([xml]$_.xml).task
-                    $SchdTsk = [PSCustomObject] @{
+                    [PSCustomObject] @{
+                        PSTypeName     = 'PSP.Inventory.ScheduledTask'
                         ComputerName   = $Computer
                         Task           = $_.Name
                         Author         = $xml.RegistrationInfo.Author
@@ -113,14 +119,12 @@ Function Get-RemoteScheduledTask {
                         Arguments      = $xml.Actions.Exec.Arguments
                         StartDirectory = $xml.Actions.Exec.WorkingDirectory
                         Hidden         = $xml.Settings.Hidden
-                        InventoryDate  = $InventoryDate
+                        InventoryDate  = (Get-Date)
                     }
-                    $SchdTsk.PSTypeNames.Insert(0, 'PSP.Inventory.ScheduledTask')
-                    $SchdTsk
                 }
             }
             catch {
-                Write-Warning ("{0}: {1}" -f $Computer, $_.Exception.Message)
+                Write-Warning "[$Computer] - Unable to access Scheduled Task Information. $_"
             }
         }
     }

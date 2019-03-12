@@ -1,0 +1,1658 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspCertificate</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspCertificate</command:noun>
+      <maml:description>
+        <maml:para>Get certification information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get certification information for local or remote machines. Allows you to specify exactly which store you want to query.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspCertificate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through .NET. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>StoreName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the StoreName to query. Default value is the 'My' name.</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">AddressBook</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">AuthRoot</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">CertificateAuthority</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Disallowed</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">My</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Root</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPeople</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPublisher</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreName</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreName</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>My</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>StoreLocation</maml:name>
+          <maml:Description>
+            <maml:para>Provide the Certification store to query. Default value is the 'LocalMachine' store.</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">CurrentUser</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">LocalMachine</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreLocation</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreLocation</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>LocalMachine</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspCertificate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>PSSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>StoreName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the StoreName to query. Default value is the 'My' name.</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">AddressBook</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">AuthRoot</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">CertificateAuthority</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Disallowed</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">My</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Root</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPeople</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TrustedPublisher</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreName</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreName</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>My</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>StoreLocation</maml:name>
+          <maml:Description>
+            <maml:para>Provide the Certification store to query. Default value is the 'LocalMachine' store.</maml:para>
+          </maml:Description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">CurrentUser</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">LocalMachine</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">StoreLocation</command:parameterValue>
+          <dev:type>
+            <maml:name>StoreLocation</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>LocalMachine</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through .NET. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>PSSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>StoreName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the StoreName to query. Default value is the 'My' name.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">StoreName</command:parameterValue>
+        <dev:type>
+          <maml:name>StoreName</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>My</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>StoreLocation</maml:name>
+        <maml:Description>
+          <maml:para>Provide the Certification store to query. Default value is the 'LocalMachine' store.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">StoreLocation</command:parameterValue>
+        <dev:type>
+          <maml:name>StoreLocation</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>LocalMachine</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Certificate</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspCertificate.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 22-02-2019 DateModified: 11-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspCertificate -ComputerName 'CONTOSO-SRV01'
+
+ComputerName    NotAfter            NotBefore           Subject                                                                          Thumbprint
+------------    --------            ---------           -------                                                                          ----------
+CONTOSO-SRV01 9-9-2038 11:31:44   14-9-2018 11:31:44  CN=127.0.0.1                                                                     BA03E7647E61F2562A...
+CONTOSO-SRV01 23-11-2038 15:49:59 28-11-2018 15:49:59 CN=127.0.0.1                                                                     B9EDE957C09C462C68...
+CONTOSO-SRV01 12-3-2019 22:46:38  11-3-2019 22:41:38  CN=1d55f591-ad2c-43dd-abef-ff7e3e6a6f51, DC=dbddf572-f118-4b32-8139-dc6cd6bae4f8 69CD7B0FB0D244E4FA...
+CONTOSO-SRV01 3-12-2028 14:02:53  3-12-2018 13:32:53  CN=1d55f591-ad3c-43dd-abef-ff7e3e6a6f51                                          28165F4FDE3E0FAA24...
+CONTOSO-SRV01 3-12-2019 14:02:58  3-12-2018 13:52:58  CN=a8b24bcf-6f4c-4b8c-907e-37acb9b15d3b                                          0F674857164B0D4197...</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the certification information for CONTOSO-SRV01 using the 'My' storename and 'LocalMachine' storelocation, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspCertificate.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspDiskInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspDiskInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Disk information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Disk information for local or remote machines. Will query Disks, partitions and volumes to obtain as much information as possible. Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspDiskInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspDiskInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Disk</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspDiskInfo.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 22-12-2018 DateModified: 11-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspDiskInfo -ComputerName 'CONTOSO-SRV01','CONTOSO-WEB01'
+
+ComputerName DriveLetter FileSystem TotalSizeGB FreeSizeGB UsedSizeGB
+------------ ----------- ---------- ----------- ---------- ----------
+CONTOSO-SRV01  C:          NTFS       50          38.81      11.19
+CONTOSO-WEB01  C:          NTFS       49.36       41.81      7.55</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the disk information for CONTOSO-SRV01 and CONTOSO-WEB01 by creating a temporary CIM session, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; $CimSession = New-CimSession -ComputerName 'CONTOSO-SRV02'
+PS C:\&gt; Get-PspDiskInfo -CimSession $CimSession
+
+ComputerName DriveLetter FileSystem TotalSizeGB FreeSizeGB UsedSizeGB
+------------ ----------- ---------- ----------- ---------- ----------
+CONTOSO-SRV02  C:          NTFS       50          38.81      11.19</dev:code>
+        <dev:remarks>
+          <maml:para>Creates a CIM session for CONTOSO-SRV02 and uses this session to get the Disk information from this machine. The session can then be re-used for other cmdlets in order to get more information. Re-using the session provides performance benefits.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspDiskInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspLocalGroup</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspLocalGroup</command:noun>
+      <maml:description>
+        <maml:para>Get all local groups for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all local groups for local or remote machines. Provides extra information such as members.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspLocalGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspLocalGroup</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>PSSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>PSSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.LocalGroup</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspLocalGroup.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 20-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspLocalGroup -ComputerName CONTOSO-HV01
+
+ComputerName GroupName         GroupType
+------------ ---------         ---------
+CONTOSO-HV01 Access Control Assistance Operators Local Group
+CONTOSO-HV01 Administrators       Local Group
+CONTOSO-HV01 Backup Operators     Local Group
+CONTOSO-HV01 Certificate Service DCOM Access  Local Group
+CONTOSO-HV01 Cryptographic Operators    Local Group
+CONTOSO-HV01 Distributed COM Users      Local Group
+CONTOSO-HV01 Event Log Readers       Local Group
+CONTOSO-HV01 Guests         Local Group
+CONTOSO-HV01 Hyper-V Administrators     Local Group
+CONTOSO-HV01 IIS_IUSRS         Local Group
+CONTOSO-HV01 Network Configuration Operators  Local Group
+CONTOSO-HV01 Performance Log Users      Local Group
+CONTOSO-HV01 Performance Monitor Users     Local Group
+CONTOSO-HV01 Power Users       Local Group
+CONTOSO-HV01 Print Operators      Local Group
+CONTOSO-HV01 RDS Endpoint Servers    Local Group
+CONTOSO-HV01 RDS Management Servers     Local Group
+CONTOSO-HV01 RDS Remote Access Servers     Local Group
+CONTOSO-HV01 Remote Desktop Users    Local Group
+CONTOSO-HV01 Remote Management Users    Local Group
+CONTOSO-HV01 Replicator        Local Group
+CONTOSO-HV01 Storage Replica Administrators   Local Group
+CONTOSO-HV01 System Managed Accounts Group    Local Group
+CONTOSO-HV01 Users          Local Group</dev:code>
+        <dev:remarks>
+          <maml:para>Gets all local groups for the machine CONTOSO-HV01, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspLocalGroup -ComputerName CONTOSO-APP01 | Where-Object {$_.GroupName -eq 'Administrators'} | Select-Object ComputerName,GroupName,Members
+
+ComputerName  GroupName      Members
+------------  ---------      -------
+CONTOSO-APP01 Administrators Administrator</dev:code>
+        <dev:remarks>
+          <maml:para>Shows you all the members of the Administrators group on CONTOSO-APP01.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspLocalGroup.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspLocalUser</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspLocalUser</command:noun>
+      <maml:description>
+        <maml:para>Get all local users for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all local users for local or remote machines. Provides extra information about the actual user based on the user's settings.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspLocalUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspLocalUser</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>PSSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>PSSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.LocalUser</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspLocalUser.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 20-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspLocalUser -ComputerName CONTOSO-SRV01
+
+ComputerName   UserName       LastLogin
+------------   --------       ---------
+CONTOSO-SRV01  Administrator  3/12/2019 8:47:17 AM
+CONTOSO-SRV01  DefaultAccount
+CONTOSO-SRV01  Guest</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the local users for CONTOSO-SRV01, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspLocalUser.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspNicInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspNicInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Network adapter information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Network adapter information for local or remote machines. Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspNicInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Drivers</maml:name>
+          <maml:Description>
+            <maml:para>Switch parameter. If activated will try and obtain the driver information for the adapter. Do note that this will substantially increase time required.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspNicInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Drivers</maml:name>
+          <maml:Description>
+            <maml:para>Switch parameter. If activated will try and obtain the driver information for the adapter. Do note that this will substantially increase time required.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Drivers</maml:name>
+        <maml:Description>
+          <maml:para>Switch parameter. If activated will try and obtain the driver information for the adapter. Do note that this will substantially increase time required.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.NIC</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspNicInfo.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 20-12-2018 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspNicInfo -ComputerName CONTOSO-SRV01,CONTOSO-SRV02
+
+ComputerName   Alias    Index IPAddress                                 Status
+------------   -----    ----- ---------                                 ------
+CONTOSO-SRV01  Ethernet 1     {192.168.14.6, fe80::a438:7d49:4f12:b000} Connected
+CONTOSO-SRV02  Ethernet 1     {192.168.14.7, fe80::31f3:d92a:a4b9:e3a8} Connected</dev:code>
+        <dev:remarks>
+          <maml:para>Gets network adapter information for both CONTOSO-SRV01 and CONTOSO-SRV02, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspNicInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspOSInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspOSInfo</command:noun>
+      <maml:description>
+        <maml:para>Get Operating System information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Operating System information for local or remote machines. Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspOSInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspOSInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.OperatingSystemInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspOSInfo.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 20-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspOSInfo -ComputerName CONTOSO-SRV01,CONTOSO-SRV02
+
+ComputerName   Caption                                Version    OSArchitecture LastReboot
+------------   -------                                -------    -------------- ----------
+CONTOSO-SRV01  Microsoft Windows Server 2016 Standard 10.0.14393 64-bit         3/4/2019 1:41:07 PM
+CONTOSO-SRV02  Microsoft Windows Server 2019 Standard 10.0.17763 64-bit         3/4/2019 1:41:25 PM</dev:code>
+        <dev:remarks>
+          <maml:para>Gets Operating system information for CONTOSO-SRV01 and CONTOSO-SRV02, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspOSInfo -ComputerName CONTOSO-WEB01 | Format-List
+
+ComputerName   : CONTOSO-WEB01
+Caption        : Microsoft Windows Server 2016 Standard
+Version        : 10.0.14393
+ServicePack    : 0.0
+ProductKey     :
+LastReboot     : 3/4/2019 1:41:07 PM
+OSArchitecture : 64-bit
+TimeZone       : (UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna
+PageFile       :
+PageFileSizeGB : 0
+InventoryDate  : 3/12/2019 9:56:50 AM</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the Operating system information for CONTOSO-WEB01 and shows all collected properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspOSInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspScheduledTask</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspScheduledTask</command:noun>
+      <maml:description>
+        <maml:para>Get Scheduled task information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Scheduled task information for local or remote machines. Will get all scheduled tasks in the root folder.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspScheduledTask</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.ScheduledTask</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspScheduledTask.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 23-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspScheduledTask -ComputerName CONTOSO-SRV01,CONTOSO-WEB01,CONTOSO-APP01
+
+ComputerName    Task                                                                          Enabled State    LastResult
+------------    ----                                                                          ------- -----    ----------
+CONTOSO-SRV01   Optimize Start Menu Cache Files-S-1-5-21-2130384611-3847849876-2318412143-500 False   Disabled Successfully completed
+CONTOSO-WEB01   notepad                                                                       False   Disabled Successfully completed
+CONTOSO-APP01   GoogleUpdateTaskMachineCore                                                   True    Ready    Successfully completed
+CONTOSO-APP01   GoogleUpdateTaskMachineUA                                                     True    Ready    Successfully completed</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the Scheduled Tasks for CONTOSO-SRV01, CONTOSO-WEB01 and CONTOSO-APP01, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspScheduledTask.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspSecurityUpdate</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspSecurityUpdate</command:noun>
+      <maml:description>
+        <maml:para>Get all the security update information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get all the security update information for local or remote machines. Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspSecurityUpdate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspSecurityUpdate</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.SecurityUpdate</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspSecurityUpdate.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 21-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspSecurityUpdate -ComputerName CONTOSO-SRV01,CONTOSO-SRV02
+
+ComputerName   Type            KBFile    InstallDate
+------------   ----            ------    -----------
+CONTOSO-SRV01  Update          KB4049065 2/2/2018 12:00:00 AM
+CONTOSO-SRV01  Security Update KB4048953 2/2/2018 12:00:00 AM
+CONTOSO-SRV02  Update          KB4464455 10/29/2018 12:00:00 AM</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the installed security updates for CONTOSO-SRV01 and CONTOSO-SRV02, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspSecurityUpdate.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspServerRole</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspServerRole</command:noun>
+      <maml:description>
+        <maml:para>Get Server Roles for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get Server Roles for local or remote machines. Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspServerRole</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspServerRole</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.ServerRole</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspServerRole.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 22-12-2018 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspServerRole -ComputerName CONTOSO-SRV01,CONTOSO-SRV02
+
+ComputerName   RoleId Name                  InventoryDate
+------------   ------ ----                  -------------
+CONTOSO-SRV01   481 File and Storage Services       3/12/2019 10:18:40 AM
+CONTOSO-SRV01   487 SMB 1.0/CIFS File Sharing Support 3/12/2019 10:18:40 AM
+CONTOSO-SRV01   418 .NET Framework 4.6          3/12/2019 10:18:40 AM
+CONTOSO-SRV01   466 .NET Framework 4.6 Features     3/12/2019 10:18:40 AM
+CONTOSO-SRV01   420 WCF Services              3/12/2019 10:18:40 AM
+CONTOSO-SRV01   425 TCP Port Sharing            3/12/2019 10:18:40 AM
+CONTOSO-SRV01   412 Windows PowerShell 5.1        3/12/2019 10:18:40 AM
+CONTOSO-SRV01   417 Windows PowerShell          3/12/2019 10:18:40 AM
+CONTOSO-SRV01   482 Storage Services            3/12/2019 10:18:40 AM
+CONTOSO-SRV01   1003 Windows Defender            3/12/2019 10:18:40 AM
+CONTOSO-SRV01   1020 Windows Defender Features       3/12/2019 10:18:40 AM
+CONTOSO-SRV01   340 WoW64 Support             3/12/2019 10:18:40 AM
+CONTOSO-SRV02   481 File and Storage Services       3/12/2019 10:18:40 AM
+CONTOSO-SRV02   418 .NET Framework 4.7          3/12/2019 10:18:41 AM
+CONTOSO-SRV02   466 .NET Framework 4.7 Features     3/12/2019 10:18:41 AM
+CONTOSO-SRV02   420 WCF Services              3/12/2019 10:18:41 AM
+CONTOSO-SRV02   425 TCP Port Sharing            3/12/2019 10:18:41 AM
+CONTOSO-SRV02   412 Windows PowerShell 5.1        3/12/2019 10:18:41 AM
+CONTOSO-SRV02   417 Windows PowerShell          3/12/2019 10:18:41 AM
+CONTOSO-SRV02   482 Storage Services            3/12/2019 10:18:41 AM
+CONTOSO-SRV02   1043 System Data Archiver          3/12/2019 10:18:41 AM
+CONTOSO-SRV02   1003 Windows Defender Antivirus      3/12/2019 10:18:41 AM
+CONTOSO-SRV02   340 WoW64 Support             3/12/2019 10:18:41 AM</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the installed server roles for CONTOSO-SRV01 and CONTOSO-SRV02.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspServerRole.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspSoftware</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspSoftware</command:noun>
+      <maml:description>
+        <maml:para>Get the installed software for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get the installed software for local or remote machines. Will try and access the required data through a PowerShell remoting session, but in case this fails reverts to RemoteRegistry. This does however require RemoteRegistry to be enabled on the machine. Will look for both x86 and x64 installed paths.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspSoftware</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspSoftware</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>PSSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>PSSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. Using this parameter will create a temporary PSSession to obtain the information if available. If PowerShell remoting is not available, it will try and obtain the information through ADSI. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the PowerShell remoting session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>PSSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the PowerShell remoting session object to query if this is already available. Once the information has been gathered, the PowerShell session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.Software</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspSoftware.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 21-02-2019 DateModified: 12-03-2019 Blog: http://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-PspSoftware -ComputerName CONTOSO-SRV01,CONTOSO-WEB01,CONTOSO-APP01</dev:code>
+        <dev:remarks>
+          <maml:para>ComputerName    : CONTOSO-SRV01 DisplayName     : Google Chrome Version         : 72.0.3626.121 InstallDate     : 3/11/2019 12:00:00 AM Publisher       : Google LLC UninstallString : MsiExec.exe /X{0C8D8E7A-485A-39D9-82C9-DF0955BE2A57} InstallLocation : InstallSource   : C:\Users\Administrator\AppData\Local\Temp\1\Temp1_GoogleChromeEnterpriseBundle64.zip\Installers\ HelpLink        : EstimatedSizeMB : 54.5 InventoryDate   : 3/12/2019 10:25:45 AM</maml:para>
+          <maml:para>ComputerName    : CONTOSO-SRV01 DisplayName     : Google Update Helper Version         : 1.3.33.23 InstallDate     : 3/11/2019 12:00:00 AM Publisher       : Google Inc. UninstallString : MsiExec.exe /I{60EC980A-BDA2-4CB6-A427-B07A5498B4CA} InstallLocation : InstallSource   : C:\Program Files (x86)\Google\Update\1.3.33.23\ HelpLink        : EstimatedSizeMB : 0.04 InventoryDate   : 3/12/2019 10:25:45 AM</maml:para>
+          <maml:para>ComputerName    : CONTOSO-WEB01 DisplayName     : VLC media player Version         : 3.0.6 InstallDate     : Publisher       : VideoLAN UninstallString : "C:\Program Files (x86)\VideoLAN\VLC\uninstall.exe" InstallLocation : C:\Program Files (x86)\VideoLAN\VLC InstallSource   : HelpLink        : EstimatedSize   : 0 InventoryDate   : 3/12/2019 10:25:45 AM</maml:para>
+          <maml:para>ComputerName    : CONTOSO-APP01 DisplayName     : Notepad++ (32-bit x86) Version         : 7.6.4 InstallDate     : Publisher       : Notepad++ Team UninstallString : C:\Program Files (x86)\Notepad++\uninstall.exe InstallLocation : InstallSource   : HelpLink        : EstimatedSize   : 4.35 InventoryDate   : 3/12/2019 10:25:45 AM</maml:para>
+          <maml:para>Gets the installed software for CONTOSO-SRV01, CONTOSO-WEB01 and CONTOSO-APP01.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>http://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>http://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-PspSysInfo</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>PspSysInfo</command:noun>
+      <maml:description>
+        <maml:para>Get System information for local or remote machines.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Get System information for local or remote machines. Will query default information about the actual system, such as CPU &amp; Memory and if it's virtual or physical Tries to create a CIM session to obtain information, but will revert to DCOM if CIM is not available. If there's already a CIM session available, this can also be used to obtain the data.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-PspSysInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+          <maml:name>ComputerName</maml:name>
+          <maml:Description>
+            <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Credential</maml:name>
+          <maml:Description>
+            <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+          <dev:type>
+            <maml:name>PSCredential</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-PspSysInfo</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+          <maml:name>CimSession</maml:name>
+          <maml:Description>
+            <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+          <dev:type>
+            <maml:name>CimSession[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="1" aliases="CN">
+        <maml:name>ComputerName</maml:name>
+        <maml:Description>
+          <maml:para>Provide the computername(s) to query. This will create a new CIM session which will be removed once the information has been gathered. Default value is the local machine.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$env:COMPUTERNAME</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Credential</maml:name>
+        <maml:Description>
+          <maml:para>Provide the credentials for the CIM session to be created if current credentials are not sufficient.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">PSCredential</command:parameterValue>
+        <dev:type>
+          <maml:name>PSCredential</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="Session">
+        <maml:name>CimSession</maml:name>
+        <maml:Description>
+          <maml:para>Provide the CIM session object to query if this is already available. Once the information has been gathered, the CIM session will remain available for further use.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">CimSession[]</command:parameterValue>
+        <dev:type>
+          <maml:name>CimSession[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSP.Inventory.SystemInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Name: Get-PspSysInfo.ps1 Author: Robert Prüst Module: PSP-Inventory DateCreated: 24-02-2019 DateModified: 12-03-2019 Blog: https://powershellpr0mpt.com</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-PspSysInfo -ComputerName CONTOSO-SRV01,CONTOSO-SRV02
+
+ComputerName   Model           SerialNumber                     CPUCores CPULogical MemoryGB
+------------   -----           ------------                     -------- ---------- --------
+CONTOSO-SRV01  Virtual Machine 6656-6324-2091-0011-9109-1646-89 1        2          0
+CONTOSO-SRV02  Virtual Machine 8945-5393-3426-8378-9495-3257-53 1        2          1</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the installed server roles for CONTOSO-SRV01 and CONTOSO-SRV02, displaying the default properties.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version:</maml:linkText>
+        <maml:uri>https://github.com/powershellpr0mpt/PSP-Inventory/blob/master/docs/Get-PspSysInfo.md</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://powershellpr0mpt.com</maml:linkText>
+        <maml:uri>https://powershellpr0mpt.com</maml:uri>
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+</helpItems>
