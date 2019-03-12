@@ -21,7 +21,7 @@ function Get-PspNicInfo {
     Once the information has been gathered, the CIM session will remain available for further use.
 
     .PARAMETER Drivers
-    Switch parameter
+    Switch parameter.
     If activated will try and obtain the driver information for the adapter.
     Do note that this will substantially increase time required.
 

@@ -21,8 +21,8 @@ Function Get-PspCertificate {
     Once the information has been gathered, the PowerShell session will remain available for further use.
 
     .PARAMETER StoreName
-    Provide the StoreName to query
-    Default value is the 'My' name
+    Provide the StoreName to query.
+    Default value is the 'My' name.
 
     .PARAMETER StoreLocation
     Provide the Certification store to query.
