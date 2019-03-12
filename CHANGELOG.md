@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2019-03-12
+
+### BREAKING
+
+- [Issue #1](https://github.com/powershellpr0mpt/PSP-Inventory/issues/1) - Added a Psp Prefix to cmdlets.
+  Do note that old cmdlets are no longer available for use and current scripts using this module will have to be changed or aliases will have to be created.
+  This does fix the issue of conflicting cmdlet such as `Get-LocalUser` which caused the module to require the `AllowClobber` parameter before it could be installed.
+
+### Added
+
+- [Issue #2](https://github.com/powershellpr0mpt/PSP-Inventory/issues/2) - Added external help
+- [Issue #10](https://github.com/powershellpr0mpt/PSP-Inventory/issues/10) - Added native PsProvider access to registry
+- [Issue #13](https://github.com/powershellpr0mpt/PSP-Inventory/issues/13) - Added CIM/PSSession functionality for improved performance
+
+### Fixed
+
+- [Issue #7](https://github.com/powershellpr0mpt/PSP-Inventory/issues/7) - Due to new help system, new Pester test has been made to check availability of help
+
 ## [0.9.2] - 2019-03-05
 
 ### Changed
