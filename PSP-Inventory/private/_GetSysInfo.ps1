@@ -13,7 +13,7 @@ function _GetSysInfo {
         Manufacturer              = $CS.Manufacturer
         Model                     = $CS.Model
         SystemType                = $CS.SystemType
-        State                     = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual") {'Virtual'}else {'Physical'}
+        State                     = if ($CS.Manufacturer -match "Hyper|Citrix|VMWare|virtual|Microsoft") {'Virtual'}else {'Physical'}
         SerialNumber              = $Enclosure.SerialNumber
         ChassisType               = (Convert-ChassisType $Enclosure.ChassisTypes)
         Description               = $Enclosure.Description
