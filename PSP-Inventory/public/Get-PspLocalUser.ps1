@@ -61,18 +61,23 @@ Function Get-PspLocalUser {
             foreach ($Computer in $ComputerName) {
                 $Computer = $Computer.toUpper()
                 try {
-                    $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
-                    foreach ($User in $UserInfo) {
-                        [PSCustomObject]@{
-                            PSTypeName    = 'PSP.Inventory.LocalUser'
-                            ComputerName  = $Computer
-                            UserName      = $User.Name[0]
-                            Description   = $User.Description[0]
-                            LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
-                            SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
-                            UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
-                            InventoryDate = (Get-Date)
+                    $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $Computer -Property ProductType -ErrorAction Stop).ProductType
+                    if (!($ProductType -eq 2)){
+                        $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
+                        foreach ($User in $UserInfo) {
+                            [PSCustomObject]@{
+                                PSTypeName    = 'PSP.Inventory.LocalUser'
+                                ComputerName  = $Computer
+                                UserName      = $User.Name[0]
+                                Description   = $User.Description[0]
+                                LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
+                                SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
+                                UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
+                                InventoryDate = (Get-Date)
+                            }
                         }
+                    } else {
+                        Write-Warning "[$Computer] - is a Domain Controller, no local users available"
                     }
                 }
                 catch {
