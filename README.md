@@ -1,5 +1,8 @@
 # PSP-Inventory
 
+![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PSP-Inventory.svg?label=PSGallery%20Version&logo=PowerShell&style=flat-square)
+![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSP-Inventory.svg?label=PSGallery%20Downloads&logo=PowerShell&style=flat-square)
+
 ## What does it do
 
 The PSP-Inventory module provides new cmdlets for you to inventorise your Windows environment.

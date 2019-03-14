@@ -6,7 +6,7 @@
 
         Name: PSP-Inventory
         Author: Robert Prust
-        Version: 1.0.0
+        Version: 1.0.1
         Blog: https://powershellpr0mpt.com
 
     .LINK
