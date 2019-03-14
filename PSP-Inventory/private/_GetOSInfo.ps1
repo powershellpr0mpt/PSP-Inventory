@@ -18,8 +18,8 @@ function _GetOSInfo {
         LastReboot     = $OS.LastBootUpTime
         OSArchitecture = $OS.OSArchitecture
         TimeZone       = $TimeZone.Caption
-        PageFile       = $PageFile.Name
-        PageFileSizeGB = ([math]::round(($PageFile.FileSize / 1GB), 0))
+        PageFile       = if ($PageFile){foreach ($File in $PageFile){$File.Name}}else{$null}
+        PageFileSizeGB = if ($PageFile){foreach ($File in $PageFile){([math]::round(($File.FileSize / 1GB), 0))}} else{$null}
         InventoryDate  = (Get-Date)
     }
 }
