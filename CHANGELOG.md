@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2019-03-15
+
+### Fixed
+
+- Similar to [Issue #25](https://github.com/powershellpr0mpt/PSP-Inventory/issues/26) - Added a check to see if Get-PspLocalGroup is run on a Domain Controller or not.
+
+---
+
 ## [1.0.2] - 2019-03-14
 
-### Fixes
+### Fixed
 
 - [Issue #32](https://github.com/powershellpr0mpt/PSP-Inventory/issues/32) - Page file information not displayed when multiple page files configured
 

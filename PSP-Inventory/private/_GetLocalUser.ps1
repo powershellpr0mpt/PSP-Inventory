@@ -3,8 +3,9 @@ function _GetLocalUser {
     Param(
         [System.Management.Automation.Runspaces.PSSession]$PSSession
     )
-    Write-Verbose "[$Computer] - Gathering Local User information"
     Invoke-Command -Session $PSSession -ScriptBlock {
+        $Computer = $env:COMPUTERNAME.ToUpper()
+        Write-Verbose "[$Computer] - Gathering Local User information"
         Function ConvertTo-SID{
             [cmdletbinding()]
             param(
@@ -45,7 +46,6 @@ function _GetLocalUser {
             }
             $List -join '; '
         }
-        $Computer = $env:COMPUTERNAME.ToUpper()
         #Check if Domain Controller - https://docs.microsoft.com/en-us/windows/desktop/CIMWin32Prov/win32-operatingsystem#properties
         $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -Property ProductType).ProductType
         if (!($ProductType -eq 2)){

@@ -113,17 +113,22 @@ Function Get-PspLocalGroup {
                 catch [System.Management.Automation.Remoting.PSRemotingTransportException] {
                     Write-Warning "[$Computer] - Unable to open PS Remoting session. Reverting to [ADSI]"
                     try {
-                        $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
-                        foreach ($Group in $GroupInfo) {
-                            [PSCustomObject]@{
-                                PSTypeName    = 'PSP.Inventory.LocalGroup'
-                                ComputerName  = $Computer
-                                GroupName     = $Group.Name[0]
-                                Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
-                                GroupType     = $GroupType[[int]$Group.GroupType[0]]
-                                SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
-                                InventoryDate = $InventoryDate
+                        $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $Computer -Property ProductType -ErrorAction Stop).ProductType
+                        if (!($ProductType -eq 2)){
+                            $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
+                            foreach ($Group in $GroupInfo) {
+                                [PSCustomObject]@{
+                                    PSTypeName    = 'PSP.Inventory.LocalGroup'
+                                    ComputerName  = $Computer
+                                    GroupName     = $Group.Name[0]
+                                    Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
+                                    GroupType     = $GroupType[[int]$Group.GroupType[0]]
+                                    SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
+                                    InventoryDate = $InventoryDate
+                                }
                             }
+                        } else {
+                            Write-Warning "[$Computer] - is a Domain Controller, no local groups available"
                         }
                     }
                     catch {
