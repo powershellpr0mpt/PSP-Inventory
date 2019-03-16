@@ -46,7 +46,7 @@ function _GetLocalUser {
             }
             $List -join '; '
         }
-        $DomainRole = (Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+        $DomainRole = (Get-CimInstance -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
         if (!($DomainRole -match "4|5")){
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
             foreach ($User in $UserInfo) {
