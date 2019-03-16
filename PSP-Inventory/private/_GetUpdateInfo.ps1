@@ -5,7 +5,8 @@ function _GetUpdateInfo {
     )
     Write-Verbose "[$($CimSession.ComputerName)] - Gathering Security Update information"
     try {
-        Get-CimInstance -CimSession $CimSession -ClassName Win32_QuickFixEngineering -ErrorAction Stop | ForEach-Object {
+        $Updates = Get-CimInstance -CimSession $CimSession -ClassName Win32_QuickFixEngineering -ErrorAction Stop
+        $Updates | ForEach-Object {
             [PSCustomObject]@{
                 PSTypeName    = 'PSP.Inventory.SecurityUpdate'
                 ComputerName  = $Cimsession.ComputerName
@@ -37,7 +38,8 @@ function _GetUpdateInfo {
             $CimProperties.Remove('SessionOption') | Out-Null
         }
         try {
-            Get-CimInstance -CimSession $NewCimSession -ClassName Win32_QuickFixEngineering -ErrorAction Stop | ForEach-Object {
+            $Updates = Get-CimInstance -CimSession $NewCimSession -ClassName Win32_QuickFixEngineering -ErrorAction Stop
+            $Updates | ForEach-Object {
                 [PSCustomObject]@{
                     PSTypeName    = 'PSP.Inventory.SecurityUpdate'
                     ComputerName  = $NewCimsession.ComputerName
