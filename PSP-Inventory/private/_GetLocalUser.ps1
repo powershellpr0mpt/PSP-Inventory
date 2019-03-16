@@ -46,9 +46,8 @@ function _GetLocalUser {
             }
             $List -join '; '
         }
-        #Check if Domain Controller - https://docs.microsoft.com/en-us/windows/desktop/CIMWin32Prov/win32-operatingsystem#properties
-        $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -Property ProductType).ProductType
-        if (!($ProductType -eq 2)){
+        $DomainRole = (Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+        if (!($DomainRole -match "4|5")){
             $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
             foreach ($User in $UserInfo) {
                 [PSCustomObject]@{

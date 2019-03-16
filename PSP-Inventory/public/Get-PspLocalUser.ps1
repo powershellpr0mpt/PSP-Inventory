@@ -61,8 +61,8 @@ Function Get-PspLocalUser {
             foreach ($Computer in $ComputerName) {
                 $Computer = $Computer.toUpper()
                 try {
-                    $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $Computer -Property ProductType -ErrorAction Stop).ProductType
-                    if (!($ProductType -eq 2)){
+                    $DomainRole = (Get-CimInstance -ComputerName $Computer -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+                    if (!($DomainRole -match "4|5")){
                         $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
                         foreach ($User in $UserInfo) {
                             [PSCustomObject]@{

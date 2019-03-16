@@ -6,7 +6,7 @@ function _GetOSInfo {
     Write-Verbose "[$($CimSession.ComputerName)] - Gathering OS information"
     $TimeZone = Get-CimInstance -CimSession $CimSession -ClassName Win32_TimeZone -Property Caption -ErrorAction Stop
     $OS = Get-CimInstance -CimSession $CimSession -ClassName Win32_OperatingSystem -Property Caption, Version, ServicePackMajorVersion, ServicePackMinorVersion, LastBootUpTime, OSArchitecture, InstallDate
-    $ProductKey = (Get-CimInstance -CimSession $CimSession -Query 'SELECT OA3xOriginalProductKey FROM SoftwareLicensingService').OA3xOriginalProductKey
+    $ProductKey = (Get-CimInstance -CimSession $CimSession -Query 'SELECT OA3xOriginalProductKey FROM SoftwareLicensingService' -ErrorAction SilentlyContinue).OA3xOriginalProductKey
     $PageFile = Get-CimInstance -CimSession $CimSession -ClassName Win32_PageFile -Property Name, FileSize
     [PSCustomObject]@{
         PSTypename     = 'PSP.Inventory.OperatingSystemInfo'

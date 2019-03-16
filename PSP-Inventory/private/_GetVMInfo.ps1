@@ -6,7 +6,7 @@ function _GetVMInfo {
     Write-Verbose "[$($PSSession.ComputerName)] - Gathering VM information"
     $VMInfo = Invoke-Command -Session $PSSession -ScriptBlock {
         $HVService = Get-Service -DisplayName '*Hyper-V*' | Where-Object {$_.Status -eq 'Running'}
-        $HVProperties = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Virtual Machine\Guest\Parameters' -Name VirtualMachineName, PhysicalHostNameFullyQualified
+        $HVProperties = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Virtual Machine\Guest\Parameters' -Name VirtualMachineName, PhysicalHostNameFullyQualified -ErrorAction SilentlyContinue
         $VMService = Get-Service -Name VMTools -ErrorAction SilentlyContinue
         [PSCustomObject]@{
             HVIntegrationServicesRunning = if ($HVService) {$true}else {$false}
