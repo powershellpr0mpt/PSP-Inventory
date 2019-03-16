@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2019-03-16
+
+### Added
+
+- [Issue #34](https://github.com/powershellpr0mpt/PSP-Inventory/issues/34) - Added extra information to be gathered. Includes a new cmdlet: `Get-PspVMInfo`
+
+---
+
 ## [1.0.3] - 2019-03-15
 
 ### Fixed

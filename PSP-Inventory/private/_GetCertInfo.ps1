@@ -12,7 +12,7 @@ function _GetCertInfo {
     foreach ($Certificate in $Certificates) {
         [PSCustomObject]@{
             PSTypeName    = 'PSP.Inventory.Certificate'
-            ComputerName  = $env:COMPUTERNAME.ToUpper()
+            ComputerName  = $PSSession.ComputerName.ToUpper()
             StoreName     = $StoreName
             StoreLocation = $StoreLocation
             FriendlyName  = $Certificate.FriendlyName

@@ -4,12 +4,14 @@ function _GetSysInfo {
         [Microsoft.Management.Infrastructure.CimSession]$Cimsession
     )
     Write-Verbose "[$($CimSession.ComputerName)] - Gathering System information"
-    $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property Manufacturer, Model, SystemType, NumberOfProcessors, NumberOfLogicalProcessors, TotalPhysicalMemory -ErrorAction Stop
+    $CS = Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property Manufacturer, Model, SystemType, NumberOfProcessors, NumberOfLogicalProcessors, TotalPhysicalMemory, Domain, DomainRole -ErrorAction Stop
     $Enclosure = Get-CimInstance -CimSession $CimSession -ClassName Win32_SystemEnclosure -Property SerialNumber, ChassisTypes, Description
     $BIOS = Get-CimInstance -CimSession $CimSession -ClassName Win32_Bios -Property Name, Manufacturer, SerialNumber, SMBIOSBIOSVersion
     [PSCustomObject]@{
         PSTypeName                = 'PSP.Inventory.SystemInfo'
         ComputerName              = $Cimsession.ComputerName
+        Domain                    = $CS.Domain
+        DomainRole                = (Convert-DomainRole $CS.DomainRole)
         Manufacturer              = $CS.Manufacturer
         Model                     = $CS.Model
         SystemType                = $CS.SystemType
