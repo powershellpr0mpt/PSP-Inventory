@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2019-03-16
+
+### Fixed
+
+- [Issue #36](https://github.com/powershellpr0mpt/PSP-Inventory/issues/36) - `Get-PspVMInfo` produces error when not a Hyper-V VM
+- [Issue #37](https://github.com/powershellpr0mpt/PSP-Inventory/issues/37) - `Get-PspOSInfo` can give error on Productkey when not available
+- [Issue #38](https://github.com/powershellpr0mpt/PSP-Inventory/issues/38) - `Get-PspLocalGroup` broken after update 1.0.4 when using PSSession
+
+---
+
 ## [1.0.4] - 2019-03-16
 
 ### Added

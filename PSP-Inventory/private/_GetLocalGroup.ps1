@@ -13,9 +13,17 @@ function _GetLocalGroup {
             )
             (New-Object System.Security.Principal.SecurityIdentifier($BinarySID, 0)).Value
         }
-        #Check if Domain Controller - https://docs.microsoft.com/en-us/windows/desktop/CIMWin32Prov/win32-operatingsystem#properties
-        $ProductType = (Get-CimInstance -ClassName Win32_OperatingSystem -Property ProductType).ProductType
-        if (!($ProductType -eq 2)){
+        Function _GetLocalGroupMember {
+            [cmdletbinding()]
+            param (
+                $Group
+            )
+            $Group.Invoke('Members') | ForEach-Object {
+                $_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)
+            }
+        }
+        $DomainRole = (Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+        if (!($DomainRole -match "4|5")){
             $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
             foreach ($Group in $GroupInfo) {
                 [PSCustomObject]@{
