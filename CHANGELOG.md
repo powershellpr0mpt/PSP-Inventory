@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.5] - 2019-03-16
 
+### Changed
+
+- [Issue #40](https://github.com/powershellpr0mpt/PSP-Inventory/issues/40) - `Get-PspSecurityUpdate` performance VERY slow
+
+## [1.0.5] - 2019-03-16
+
 ### Fixed
 
 - [Issue #36](https://github.com/powershellpr0mpt/PSP-Inventory/issues/36) - `Get-PspVMInfo` produces error when not a Hyper-V VM
