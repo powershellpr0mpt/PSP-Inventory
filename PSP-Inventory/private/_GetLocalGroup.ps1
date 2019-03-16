@@ -22,7 +22,7 @@ function _GetLocalGroup {
                 $_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)
             }
         }
-        $DomainRole = (Get-CimInstance -CimSession $CimSession -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+        $DomainRole = (Get-CimInstance -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
         if (!($DomainRole -match "4|5")){
             $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
             foreach ($Group in $GroupInfo) {
