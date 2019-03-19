@@ -46,23 +46,27 @@ function _GetLocalUser {
             }
             $List -join '; '
         }
-        $DomainRole = (Get-CimInstance -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
-        if (!($DomainRole -match "4|5")){
-            $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
-            foreach ($User in $UserInfo) {
-                [PSCustomObject]@{
-                    PSTypeName    = 'PSP.Inventory.LocalUser'
-                    ComputerName  = $Computer
-                    UserName      = $User.Name[0]
-                    Description   = $User.Description[0]
-                    LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
-                    SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
-                    UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
-                    InventoryDate = (Get-Date)
+        try {
+            $DomainRole = (Get-WmiObject -Class Win32_ComputerSystem -Property DomainRole -ErrorAction Stop).DomainRole
+            if (!($DomainRole -match "4|5")){
+                $UserInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'User'}
+                foreach ($User in $UserInfo) {
+                    [PSCustomObject]@{
+                        PSTypeName    = 'PSP.Inventory.LocalUser'
+                        ComputerName  = $Computer
+                        UserName      = $User.Name[0]
+                        Description   = $User.Description[0]
+                        LastLogin     = if ($User.LastLogin[0] -is [datetime]) {$User.LastLogin[0]}else {$null}
+                        SID           = (ConvertTo-SID -BinarySID $User.ObjectSid[0])
+                        UserFlags     = (Convert-UserFlag -UserFlag $User.UserFlags[0])
+                        InventoryDate = (Get-Date)
+                    }
                 }
+            }else {
+                Write-Warning "[$Computer] - is a Domain Controller, no local users available"
             }
-        }else {
-            Write-Warning "[$Computer] - is a Domain Controller, no local users available"
+        }catch{
+            Write-Warning "[$Computer] - Unable to check domain role, skipping information collection."
         }
     }
 }
