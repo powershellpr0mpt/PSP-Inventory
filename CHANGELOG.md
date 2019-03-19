@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.6] - 2019-03-16
+## [1.0.8] - 2019-03-19
+
+### Fixed
+
+- [Issue #45](https://github.com/powershellpr0mpt/PSP-Inventory/issues/45) - `Get-PspLocalUser` and `Get-PspLocalGroup` give errors on PSSession - continued... Finally confirmed fixed this time :)
+
+---
+
+## [1.0.7] - 2019-03-16
 
 ### Fixed
 
