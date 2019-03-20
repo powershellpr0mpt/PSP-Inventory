@@ -113,7 +113,7 @@ Function Get-PspLocalGroup {
                 catch [System.Management.Automation.Remoting.PSRemotingTransportException] {
                     Write-Warning "[$Computer] - Unable to open PS Remoting session. Reverting to [ADSI]"
                     try {
-                        $DomainRole = (Get-CimInstance -ComputerName $Computer -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
+                        $DomainRole = (Get-WmiObject -ComputerName $Computer -Class Win32_ComputerSystem -Property DomainRole -ErrorAction Stop).DomainRole
                         if (!($DomainRole -match "4|5")){
                             $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
                             foreach ($Group in $GroupInfo) {

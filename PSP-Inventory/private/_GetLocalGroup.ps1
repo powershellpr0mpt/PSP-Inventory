@@ -22,22 +22,26 @@ function _GetLocalGroup {
                 $_.GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null)
             }
         }
-        $DomainRole = (Get-CimInstance -ClassName Win32_ComputerSystem -Property DomainRole).DomainRole
-        if (!($DomainRole -match "4|5")){
-            $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
-            foreach ($Group in $GroupInfo) {
-                [PSCustomObject]@{
-                    PSTypeName    = 'PSP.Inventory.LocalGroup'
-                    ComputerName  = $Computer
-                    GroupName     = $Group.Name[0]
-                    Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
-                    GroupType     = $GroupType[[int]$Group.GroupType[0]]
-                    SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
-                    InventoryDate = (Get-Date)
+        try {
+            $DomainRole = (Get-WmiObject -Class Win32_ComputerSystem -Property DomainRole -ErrorAction Stop).DomainRole
+                if (!($DomainRole -match "4|5")){
+                $GroupInfo = ([ADSI]"WinNT://$Computer").Children | Where-Object {$_.SchemaClassName -eq 'Group'}
+                foreach ($Group in $GroupInfo) {
+                    [PSCustomObject]@{
+                        PSTypeName    = 'PSP.Inventory.LocalGroup'
+                        ComputerName  = $Computer
+                        GroupName     = $Group.Name[0]
+                        Members       = ((_GetLocalGroupMember -Group $Group) -join '; ')
+                        GroupType     = $GroupType[[int]$Group.GroupType[0]]
+                        SID           = (ConvertTo-SID -BinarySID $Group.ObjectSid[0])
+                        InventoryDate = (Get-Date)
+                    }
                 }
+            }else {
+                Write-Warning "[$Computer] - is a Domain Controller, no local groups available"
             }
-        }else {
-            Write-Warning "[$Computer] - is a Domain Controller, no local groups available"
+        }catch{
+            Write-Warning "[$Computer] - Unable to check domain role, skipping information collection."
         }
     }
 }

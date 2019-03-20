@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.6] - 2019-03-16
+## [1.0.8] - 2019-03-19
+
+### Fixed
+
+- [Issue #45](https://github.com/powershellpr0mpt/PSP-Inventory/issues/45) - `Get-PspLocalUser` and `Get-PspLocalGroup` give errors on PSSession - continued... Finally confirmed fixed this time :)
+
+### Added
+
+- [Issue #46](https://github.com/powershellpr0mpt/PSP-Inventory/issues/46) - Better error handling for improperly formatted dates in software registry when using `Get-PspSoftware`
+
+---
+
+## [1.0.7] - 2019-03-16
 
 ### Fixed
 
@@ -43,7 +55,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
-- Similar to [Issue #25](https://github.com/powershellpr0mpt/PSP-Inventory/issues/26) - Added a check to see if Get-PspLocalGroup is run on a Domain Controller or not.
+- Similar to [Issue #25](https://github.com/powershellpr0mpt/PSP-Inventory/issues/26) - Added a check to see if `Get-PspLocalGroup` is run on a Domain Controller or not.
 
 ---
 
@@ -59,8 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- [Issue #24](https://github.com/powershellpr0mpt/PSP-Inventory/issues/25) - Added a check to see if Get-PspServerRole is run on a workstation or not.
-- [Issue #25](https://github.com/powershellpr0mpt/PSP-Inventory/issues/26) - Added a check to see if Get-PspLocalUser is run on a Domain Controller or not.
+- [Issue #24](https://github.com/powershellpr0mpt/PSP-Inventory/issues/25) - Added a check to see if `Get-PspServerRole` is run on a workstation or not.
+- [Issue #25](https://github.com/powershellpr0mpt/PSP-Inventory/issues/26) - Added a check to see if `Get-PspLocalUser` is run on a Domain Controller or not.
 
 ### Fixed
 
@@ -93,7 +105,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - [Issue #8](https://github.com/powershellpr0mpt/PSP-Inventory/issues/8) - No longer exports private functions.
-- [Issue #9](https://github.com/powershellpr0mpt/PSP-Inventory/issues/9) - InventoryDate property is now a proper [datetime] object.
+- [Issue #9](https://github.com/powershellpr0mpt/PSP-Inventory/issues/9) - InventoryDate property is now a proper `[datetime]` object.
 
 ### Fixed
 
@@ -107,12 +119,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - [Issue #3](https://github.com/powershellpr0mpt/PSP-Inventory/pull/3) - ComputerName property always displays in uppercase.
-- Get-RemoteCertificate includes more properties [Subject/HasPrivateKey].
+- `Get-RemoteCertificate` includes more properties [Subject/HasPrivateKey].
 - Changed Notes and Link URLs to https.
 
 ### Fixed
 
-- [Issue #5](https://github.com/powershellpr0mpt/PSP-Inventory/pull/5) - Inventory date on Get-SecurityUpdate and Get-Software incorrect.
+- [Issue #5](https://github.com/powershellpr0mpt/PSP-Inventory/pull/5) - Inventory date on `Get-SecurityUpdate` and `Get-Software` incorrect.
 
 ---
 
@@ -133,7 +145,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Known Issues
 
-- Pester test for help files on Get-RemoteCertificate script provides an error on the StoreLocation and StoreName type.
+- Pester test for help files on `Get-RemoteCertificate` script provides an error on the StoreLocation and StoreName type.
 
 ---
 

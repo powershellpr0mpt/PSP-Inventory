@@ -15,7 +15,7 @@ function _GetSoftwareInfo {
                 ComputerName    = $PSSession.ComputerName
                 DisplayName     = $Program.DisplayName
                 Version         = $Program.DisplayVersion
-                InstallDate     = if ($Program.InstallDate) {[datetime]::ParseExact($($Program.InstallDate), 'yyyyMMdd', [System.Globalization.CultureInfo]::InvariantCulture)} else {$null}
+                InstallDate     = if ($Program.InstallDate) {try {[datetime]::ParseExact($($Program.InstallDate), 'yyyyMMdd', [System.Globalization.CultureInfo]::InvariantCulture)}catch{$null}} else {$null}
                 Publisher       = $Program.Publisher
                 UninstallString = $Program.UninstallString
                 InstallLocation = $Program.InstallLocation
