@@ -10,29 +10,24 @@ $Modules = @('Psake', 'BuildHelpers', 'Pester', 'PSScriptAnalyzer', 'PSDeploy')
 
 ForEach ($Module in $Modules) {
     Write-Host "...$Module" -ForegroundColor Yellow
-    If (!(Get-Module -Name $Module -ListAvailable)) {
-        try {
-            $InstallModuleParams = @{
-                Name  = $Module
-                Scope = 'CurrentUser'
-                Force = $true
-            }
-            if ($Module -eq 'Pester') {
-                $InstallModuleParams.SkipPublisherCheck = $true
-            }
-            $null = Find-Module $Module -ErrorAction Stop
-            $null = Install-Module @InstallModuleParams
-            Write-Host "...Importing" -ForegroundColor Green
-            Import-Module $Module
-            Write-Host "...Complete" -ForegroundColor Green
+    try {
+        $InstallModuleParams = @{
+            Name  = $Module
+            Scope = 'CurrentUser'
+            Force = $true
         }
-        catch {
-            Write-Host "...Not Found!" -ForegroundColor Red
-            Write-Error -Message $_ -ErrorAction Stop
+        if ($Module -eq 'Pester') {
+            $InstallModuleParams.SkipPublisherCheck = $true
         }
+        $null = Find-Module $Module -ErrorAction Stop
+        $null = Install-Module @InstallModuleParams
+        Write-Host "...Importing" -ForegroundColor Green
+        Import-Module $Module
+        Write-Host "...Complete" -ForegroundColor Green
     }
-    Else {
-        Write-Host "...Already Loaded" -ForegroundColor Gray
+    catch {
+        Write-Host "...Not Found!" -ForegroundColor Red
+        Write-Error -Message $_ -ErrorAction Stop
     }
 }
 Write-Host "Completed Importing Modules`r`n" -ForegroundColor Green
